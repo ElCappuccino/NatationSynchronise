@@ -3,6 +3,7 @@
   <listener>
     <listener-class>com.natation.config.InitialisationDAOFactory</listener-class>
   </listener>
+  
   <servlet>
     <servlet-name>connect</servlet-name>
     <servlet-class>com.natation.servlets.ConnexionServlet</servlet-class>
@@ -11,6 +12,7 @@
     <servlet-name>connect</servlet-name>
     <url-pattern>/connect</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>accueil</servlet-name>
     <servlet-class>com.natation.servlets.AccueilServlet</servlet-class>
@@ -19,6 +21,7 @@
     <servlet-name>accueil</servlet-name>
     <url-pattern>/accueil</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>competition</servlet-name>
     <servlet-class>com.natation.servlets.CompetitionServlet</servlet-class>
@@ -26,5 +29,14 @@
   <servlet-mapping>
     <servlet-name>competition</servlet-name>
     <url-pattern>/competition</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>logout</servlet-name>
+    <servlet-class>com.natation.servlets.DeconnexionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>logout</servlet-name>
+    <url-pattern>/logout</url-pattern>
   </servlet-mapping>
 </web-app>
