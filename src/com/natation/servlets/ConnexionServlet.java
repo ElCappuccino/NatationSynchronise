@@ -1,8 +1,6 @@
 package com.natation.servlets;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +12,8 @@ import com.natation.dao.UtilisateurDAO;
 import com.natation.metiers.ConnexionForm;
 
 public class ConnexionServlet extends HttpServlet {
-	
+
+	private static final long serialVersionUID = 1L;
 	public static final String VUE = "/WEB-INF/connexion.jsp";
 	public static final String RESP_ERRORS = "erreurs";
 	public static final String RESP_CONNECT = "reponse";
@@ -37,7 +36,7 @@ public class ConnexionServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Tentative de connexion
-		ConnexionForm cf = new ConnexionForm();
+		ConnexionForm cf = new ConnexionForm(utilisateurDAO);
 		cf.connecterUser(req);
 		
 		// Stockage des messages d'erreur et transmission à la page JSP

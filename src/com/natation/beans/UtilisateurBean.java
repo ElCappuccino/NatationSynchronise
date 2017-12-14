@@ -1,5 +1,9 @@
 package com.natation.beans;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class UtilisateurBean {
 
 	String id;
@@ -67,10 +71,24 @@ public class UtilisateurBean {
 	}
 
 	/**
-	 * @return the mdp
+	 * @return true si mdp valide, false sinon
+	 * @throws NoSuchAlgorithmException 
+	 * @throws UnsupportedEncodingException 
 	 */
-	public String getMdp() {
-		return mdp;
+	public Boolean verifyPassword(String unMdp) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		// Hasher le mdp en SHA-512
+		MessageDigest hasher = MessageDigest.getInstance("SHA-512");
+		byte[] hashMdpBytes = hasher.digest(unMdp.getBytes("UTF-8"));
+		
+		// Reconstituer une chaine de caractères pour comparer avec données en base
+		StringBuilder sb = new StringBuilder();
+        for(int i=0; i< hashMdpBytes.length ;i++){
+           sb.append(Integer.toString((hashMdpBytes[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        String hashMdpString = sb.toString();
+		
+        // Comparaison hash passé en param et hash généré
+		return ( this.mdp.equals(hashMdpString) );
 	}
 
 	/**

@@ -37,7 +37,7 @@ public class DAOFactory {
 			throw new ClassNotFoundException("Le driver SQL est introuvable");
 		}
 
-		DAOFactory instance = new DAOFactory("localhost:5432/baseTest?currentSchema=natation", "postgres", "password");
+		DAOFactory instance = new DAOFactory("localhost:5432/BaseNatation", "postgres", "password");
 		return instance;
 	}
 
@@ -47,7 +47,6 @@ public class DAOFactory {
 	 * @throws SQLException
 	 */
 	Connection getConnection() throws SQLException {
-		Connection connection = null;
 		try {
 			return DriverManager.getConnection(("jdbc:postgresql://" + url), username, password);
 		} catch (SQLException e) {
@@ -60,7 +59,6 @@ public class DAOFactory {
 	 * le moment)
 	 */
 	public UtilisateurDAO getUtilisateurDao() {
-		// TODO : me suis arreté ici. Il faut retourner une instance de UtilisateurDAO pour l'utiliser dans la servlet de connection, puis pour authentifier le user et creer la session
 		return new UtilisateurDAO(this);
 	}
 
