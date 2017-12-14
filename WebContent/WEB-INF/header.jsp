@@ -10,6 +10,7 @@
 		<nav class="navbar navbar-default">
 		  	<div class="container-fluid">
 			    <ul class="nav navbar-nav">
+			    	<c:out value="request.requestURI">Fail</c:out>
 			    	<c:choose>
 			    		<c:when test="${request.requestURI == '/NatationSynchro/accueil' }"><li class="active"><a href="/NatationSynchro/accueil">Accueil</a></li></c:when>
 			    		<c:otherwise><li><a href="/NatationSynchro/accueil">Accueil</a></li></c:otherwise>
