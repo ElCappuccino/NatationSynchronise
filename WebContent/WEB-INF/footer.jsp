@@ -1,5 +1,5 @@
 <body>
 	<footer>
-		©Copyright izi natation
+		© Copyright Izi-natation
 	</footer>
 </body>
