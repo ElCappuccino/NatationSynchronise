@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <listener>
+    <listener-class>com.natation.config.InitialisationDAOFactory</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>connect</servlet-name>
+    <servlet-class>com.natation.servlets.ConnexionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>connect</servlet-name>
+    <url-pattern>/connect</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>accueil</servlet-name>
+    <servlet-class>com.natation.servlets.AccueilServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>accueil</servlet-name>
+    <url-pattern>/accueil</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>competition</servlet-name>
+    <servlet-class>com.natation.servlets.CompetitionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>competition</servlet-name>
+    <url-pattern>/competition</url-pattern>
+  </servlet-mapping>
+</web-app>
