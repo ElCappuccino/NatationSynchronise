@@ -40,7 +40,7 @@ public class ConnexionServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Tentative de connexion
-		ConnexionForm cf = new ConnexionForm();
+		ConnexionForm cf = new ConnexionForm(utilisateurDAO);
 		UtilisateurBean utilisateurBean = cf.connecterUser(req);
 		
 		if(utilisateurBean != null) {
