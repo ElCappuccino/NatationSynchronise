@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 public class DeconnexionServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	public static final String VUE = "/WEB-INF/connexion.jsp";
+	public static final String VUE = "/connect";
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -19,6 +19,6 @@ public class DeconnexionServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		session.invalidate();
 		// Redirection a la page de connexion
-		resp.sendRedirect(VUE);
+		resp.sendRedirect( req.getContextPath() + VUE);
 	}
 }
