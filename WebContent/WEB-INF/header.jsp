@@ -10,17 +10,27 @@
 		<nav class="navbar navbar-default">
 		  	<div class="container-fluid">
 			    <ul class="nav navbar-nav">
-			    	<c:out value="request.requestURI">Fail</c:out>
 			    	<c:choose>
-			    		<c:when test="${request.requestURI == '/NatationSynchro/accueil' }"><li class="active"><a href="/NatationSynchro/accueil">Accueil</a></li></c:when>
-			    		<c:otherwise><li><a href="/NatationSynchro/accueil">Accueil</a></li></c:otherwise>
+			    		<c:when test="${pageContext.request.requestURI == '/NatationSynchronise/WEB-INF/accueil.jsp' }">
+			    			<li class="active"><a href="/NatationSynchronise/accueil">Accueil</a></li>
+			    		</c:when>
+			    		<c:otherwise><li><a href="/NatationSynchronise/accueil">Accueil</a></li></c:otherwise>
 			    	</c:choose>
 			    	
-				    <li><a href="/NatationSynchro/competition">CompÈtition</a></li>
-				    <li><a href="">Administration</a></li>
+			    	<c:choose>
+			    		<c:when test="${pageContext.request.requestURI == '/NatationSynchronise/WEB-INF/competition.jsp' }">
+			    			<li class="active"><a href="/NatationSynchronise/competition">Comp√©tition</a></li>
+			    		</c:when>
+			    		<c:otherwise><li><a href="/NatationSynchronise/competition">Comp√©tition</a></li></c:otherwise>
+			    	</c:choose>
+			    	
+			    	<c:if test="${sessionScope.userBean.admin}">
+			    		<li><a href="">Administration</a></li>
+			    	</c:if>
+				    
 			    </ul>
 			    <ul class="nav navbar-nav navbar-right">
-					<li><a href="">DÈconnexion</a></li>
+					<li><a href="/NatationSynchronise/logout">D√©connexion</a></li>
 	    		</ul>
 			</div>
 		</nav>
