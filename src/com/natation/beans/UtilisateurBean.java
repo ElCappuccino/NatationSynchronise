@@ -6,11 +6,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class UtilisateurBean {
 
-	String id;
-	String nom;
-	String prenom;
-	String mdp;
-	Boolean admin;
+	private String id;
+	private String nom;
+	private String prenom;
+	private String mdp;
+	private Boolean admin;
 	
 	/**
 	 * Constructeur complet bean utilisateur

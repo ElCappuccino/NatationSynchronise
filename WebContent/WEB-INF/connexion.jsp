@@ -23,8 +23,8 @@
 				<%-- 
 					Affichage des messages d'erreur
 				 --%>
-				<c:if test="${not empty erreurs['errChamps']}">
-					<div class="alert alert-danger">${ erreurs['errChamps'] }</div>
+				<c:if test="${not empty erreurs['errLogin']}">
+					<div class="alert alert-danger">${ erreurs['errLogin'] }</div>
 				</c:if>
 
 				<button type="submit" class="btn btn-primary">Se connecter</button>

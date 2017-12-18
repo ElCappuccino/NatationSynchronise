@@ -19,9 +19,9 @@
 			    	
 			    	<c:choose>
 			    		<c:when test="${pageContext.request.requestURI == '/NatationSynchronise/WEB-INF/competition.jsp' }">
-			    			<li class="active"><a href="/NatationSynchronise/competition">CompÃ©tition</a></li>
+			    			<li class="active"><a href="/NatationSynchronise/competition">Compétition</a></li>
 			    		</c:when>
-			    		<c:otherwise><li><a href="/NatationSynchronise/competition">CompÃ©tition</a></li></c:otherwise>
+			    		<c:otherwise><li><a href="/NatationSynchronise/competition">Compétition</a></li></c:otherwise>
 			    	</c:choose>
 			    	
 			    	<c:if test="${sessionScope.userBean.admin}">
@@ -30,7 +30,7 @@
 				    
 			    </ul>
 			    <ul class="nav navbar-nav navbar-right">
-					<li><a href="/NatationSynchronise/logout">DÃ©connexion</a></li>
+					<li><a href="/NatationSynchronise/logout">Déconnexion</a></li>
 	    		</ul>
 			</div>
 		</nav>
