@@ -61,5 +61,12 @@ public class DAOFactory {
 	public UtilisateurDAO getUtilisateurDao() {
 		return new UtilisateurDAO(this);
 	}
+	
+	/**
+	 * @return DAO liꥠ࡬a comp굩tion
+	 */
+	public CompetitionDAO getCompetitionDao() {
+		return new CompetitionDAO(this);
+	}
 
 }
