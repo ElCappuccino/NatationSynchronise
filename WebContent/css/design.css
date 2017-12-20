@@ -1,10 +1,10 @@
-html, body {
-	margin : 0;
+html {
 	width : 100%;
 	height : 100%;
 }
 
-.container {
+body {
+	margin : 0;
 	width : 100%;
 	height : 100%;
 	background-color : #F2F2F2;
@@ -15,4 +15,22 @@ html, body {
 .blocFondBlanc {
 	padding : 15px;
 	background-color: rgba(255, 255, 255, 0.6);
+}
+
+.bandeNoire {
+	margin-top : 15px;
+	margin-bottom : 15px;
+	padding : 10px 20px 10px 50px;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.bandeNoire {
+	margin-top : 40px;
+	margin-bottom : 40px;
+	padding : 10px 20px 10px 50px;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.white {
+	color : #fff;
 }

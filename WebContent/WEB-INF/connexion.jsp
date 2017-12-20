@@ -6,12 +6,19 @@
 	<jsp:include page="parts/head.jsp" />
 	
 	<body>
-		<jsp:include page="parts/header.jsp" />
-		
-		<div class="container">
-			<div class="row">
-				<div class="col-offset-5.col-3 h1">Connexion</div>
+		<%-- 
+		Hors container car occupe toujours toute la largeur de l'ecran
+	 	--%>
+		<div class="col-lg-12 justify-content-center">
+			<div class="row justify-content-center">
+				<img src="${pageContext.request.contextPath}/img/logo_ffn_390.png" alt="logo_ffc"/>
 			</div>
+		</div>
+		<div class="col-lg-12 bandeNoire">
+			<div class="col-offset-5.col-3 h1 white">Connexion</div>
+		</div>
+			
+		<div class="container">
 			<div class="row justify-content-center">
 				<div class="blocFondBlanc col-sm-7 col-md-6 col-lg-4">
 					<form method="post" action="connect">
