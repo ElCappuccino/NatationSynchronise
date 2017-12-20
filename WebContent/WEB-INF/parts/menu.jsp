@@ -1,7 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jsp:include page="head.jsp" />
-
 <div class="container">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
