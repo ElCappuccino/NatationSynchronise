@@ -68,5 +68,9 @@ public class DAOFactory {
 	public CompetitionDAO getCompetitionDao() {
 		return new CompetitionDAO(this);
 	}
+	
+	public LieuDAO getLieuDAO() {
+		return new LieuDAO(this);
+	}
 
 }

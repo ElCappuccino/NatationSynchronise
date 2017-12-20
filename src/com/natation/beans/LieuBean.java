@@ -4,7 +4,7 @@ public class LieuBean {
 	private int id;
 	private int numero;
 	private String rue;
-	private int codePostal;
+	private String codePostal;
 	private String ville;
 	
 	/**
@@ -15,7 +15,7 @@ public class LieuBean {
 	 * @param codePostal
 	 * @param ville
 	 */
-	public LieuBean(int id, int numero, String rue, int codePostal, String ville) {
+	public LieuBean(int id, int numero, String rue, String codePostal, String ville) {
 		this.id = id;
 		this.numero = numero;
 		this.rue = rue;
@@ -68,14 +68,14 @@ public class LieuBean {
 	/**
 	 * @return codePostal
 	 */
-	public int getCodePostal() {
+	public String getCodePostal() {
 		return codePostal;
 	}
 
 	/**
 	 * @param codePostal
 	 */
-	public void setCodePostal(int codePostal) {
+	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}
 
