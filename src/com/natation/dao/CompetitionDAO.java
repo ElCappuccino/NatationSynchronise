@@ -5,20 +5,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import com.natation.beans.CategorieBean;
 import com.natation.beans.CompetitionBean;
 import com.natation.beans.LieuBean;
 
 public class CompetitionDAO {
 	private DAOFactory daoFactory;
 	private LieuDAO lieuDAO;
+	private CategorieDAO categorieDAO;
 	
 	public CompetitionDAO(DAOFactory factory) {
 		this.daoFactory = factory;
-		lieuDAO = new LieuDAO(factory);
+		this.lieuDAO = factory.getLieuDAO();
+		this.categorieDAO = factory.getCategorieDAO();
 	}
 	
 	/**
-	 * R�cup�re les comp�titions li�s � un utilisateur
+	 * Récupère les compétitions liés à un utilisateur
 	 * @param idUtilisateur
 	 * @return
 	 * @throws SQLException
@@ -39,15 +42,19 @@ public class CompetitionDAO {
 			while(rs.next()) {
 				CompetitionBean comp = new CompetitionBean(
 						rs.getInt(1),
-						rs.getInt(3),
+						null,
 						idUtilisateur,
 						rs.getDate(5),
 						rs.getDate(6),
 						rs.getString(7),
 						null
 						);
+				// On récupère le lieu lié à la compétition
 				LieuBean lieu = lieuDAO.getLieuById(rs.getInt(2));
 				comp.setLieu(lieu);
+				// On récupère la catégorie lié à la compétition
+				CategorieBean categorie = categorieDAO.getCategorieById(rs.getInt(3));
+				comp.setCategorie(categorie);
 				listCompet.add(comp);
 			}
 		} catch (SQLException e) {

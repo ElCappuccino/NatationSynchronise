@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class CompetitionBean {
 	private int id;
-	private int idCategorie;
+	private CategorieBean categorie;
 	private String idUtilisateur;
 	private Date dateDebut;
 	private Date dateFin;
@@ -18,9 +18,9 @@ public class CompetitionBean {
 	 * @param idCategorie Référence à la catégorie de la compétition
 	 * @param idUtilisateur Référence au juge arbitre assigné à la compétition
 	 */
-	public CompetitionBean(int id, int idCategorie, String idUtilisateur, Date dateDebut, Date dateFin, String libelle, LieuBean lieu) {
+	public CompetitionBean(int id, CategorieBean categorie, String idUtilisateur, Date dateDebut, Date dateFin, String libelle, LieuBean lieu) {
 		this.id = id;
-		this.idCategorie = idCategorie;
+		this.categorie = categorie;
 		this.idUtilisateur = idUtilisateur;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
@@ -41,19 +41,6 @@ public class CompetitionBean {
 		this.id = id;
 	}
 
-	/**
-	 * @return R�f�rence � la cat�gorie
-	 */
-	public int getIdCategorie() {
-		return idCategorie;
-	}
-
-	/**
-	 * @param idCategorie Référence à la catégorie
-	 */
-	public void setIdCategorie(int idCategorie) {
-		this.idCategorie = idCategorie;
-	}
 
 	/**
 	 * @return Référence au juge arbitre
@@ -123,5 +110,20 @@ public class CompetitionBean {
 	 */
 	public void setLieu(LieuBean lieu) {
 		this.lieu = lieu;
+	}
+
+	/**
+	 * @return Bean de la catégorie de la compétition
+	 */
+	public CategorieBean getCategorie() {
+		return categorie;
+	}
+	
+	
+	/**
+	 * @param categorie Bean de la catégorie de la compétition
+	 */
+	public void setCategorie(CategorieBean categorie) {
+		this.categorie = categorie;
 	}
 }
