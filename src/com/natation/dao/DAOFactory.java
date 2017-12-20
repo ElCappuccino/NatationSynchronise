@@ -72,5 +72,4 @@ public class DAOFactory {
 	public LieuDAO getLieuDAO() {
 		return new LieuDAO(this);
 	}
-
 }
