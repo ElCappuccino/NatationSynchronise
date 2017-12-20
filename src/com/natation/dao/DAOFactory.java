@@ -50,7 +50,7 @@ public class DAOFactory {
 		try {
 			return DriverManager.getConnection(("jdbc:postgresql://" + url), username, password);
 		} catch (SQLException e) {
-			throw new SQLException("Erreur de connection : " + e.getLocalizedMessage());
+			throw new SQLException("Erreur de connection à la base de données. Veuillez contacter l'administrateur système. ");
 		}
 	}
 
@@ -63,7 +63,7 @@ public class DAOFactory {
 	}
 	
 	/**
-	 * @return DAO liꥠ࡬a comp굩tion
+	 * @return DAO lié à compétition
 	 */
 	public CompetitionDAO getCompetitionDao() {
 		return new CompetitionDAO(this);
