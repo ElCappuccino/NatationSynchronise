@@ -31,9 +31,10 @@ public class CompetitionDAO {
 		Connection co = this.daoFactory.getConnection();
 		
 		try {
-			String sql = "select idCompetition, idLieu, idCategorie, idUtilisateur\n"
-					+ "from competition c"
-					+ "inner join jugecompetition jc on c.idCompetition = jc.idCompetition"
+			String sql = "select c.idCompetition, c.idLieu, c.idCategorie, c.idUtilisateur, "
+					+ "c.dateDebutCompetition, c.dateFinCompetition, c.libelleCompetition "
+					+ "from competition c "
+					+ "inner join jugecompetition jc on c.idCompetition = jc.idCompetition "
 					+ "where lower(jc.idutilisateur) = lower(?)";
 			PreparedStatement requete = co.prepareStatement(sql);
 			requete.setString(1, idUtilisateur);
@@ -58,6 +59,7 @@ public class CompetitionDAO {
 				listCompet.add(comp);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new SQLException("Erreur technique. Veuillez contacter l'administrateur système.");
 		} finally {
 			co.close();

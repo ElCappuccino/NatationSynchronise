@@ -25,6 +25,7 @@ public class CompetitionBean {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.lieu = lieu;
+		this.libelle = libelle;
 	}
 
 	/**

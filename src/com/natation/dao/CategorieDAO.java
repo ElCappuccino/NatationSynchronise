@@ -17,7 +17,7 @@ public class CategorieDAO {
 		CategorieBean categorie = null;
 		Connection co = this.daoFactory.getConnection();
 		try {
-			String sql = "select idCategorie, libelleCategorie from Categorie"
+			String sql = "select idCategorie, libelleCategorie from Categorie "
 					+ "where idCategorie = ?";
 			PreparedStatement requete = co.prepareStatement(sql);
 			requete.setInt(1, idCategorie);
@@ -31,7 +31,8 @@ public class CategorieDAO {
 			}
 			
 		} catch (SQLException e) {
-			
+			e.printStackTrace();
+			throw new SQLException("Erreur technique. Veuillez contacter l'administrateur système.");
 		} finally {
 			co.close();
 		}

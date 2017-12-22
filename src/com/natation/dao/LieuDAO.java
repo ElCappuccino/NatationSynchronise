@@ -19,7 +19,7 @@ public class LieuDAO {
 		Connection co = this.daoFactory.getConnection();
 
 		try {
-			String sql = "select idLieu, numeroLieu, rueLieu, codePostalLieu, villeLieu\n"
+			String sql = "select idLieu, numeroLieu, rueLieu, codePostalLieu, villeLieu "
 					+ "from Lieu where idLieu = ?";
 			PreparedStatement requete = co.prepareStatement(sql);
 			requete.setInt(1, idLieu);
@@ -36,7 +36,8 @@ public class LieuDAO {
 			}
 			
 		} catch (SQLException e) {
-			
+			e.printStackTrace();
+			throw new SQLException("Erreur technique. Veuillez contacter l'administrateur système.");
 		} finally {
 			co.close();
 		}

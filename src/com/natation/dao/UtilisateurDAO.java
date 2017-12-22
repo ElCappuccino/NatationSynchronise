@@ -35,6 +35,7 @@ public class UtilisateurDAO {
 						);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new SQLException("Erreur technique. Veuillez contacter l'administrateur système.");
 		} finally {
 			co.close();

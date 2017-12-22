@@ -24,4 +24,8 @@ public class NotationForm {
 		}
 		return list;
 	}
+	
+	public Map<String, String> getErreurs(){
+		return erreurs;
+	}
 }

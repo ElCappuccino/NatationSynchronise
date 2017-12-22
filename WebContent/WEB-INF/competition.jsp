@@ -15,12 +15,12 @@
 			<div class="alert alert-danger">${ erreurs['getCompetitionsByUser'] }</div>
 		</c:if>
 		<form>
-			<div class="form-group">
-				<label for="listeCompetitions">Compétitions </label> 
+			<div class="form-group row">
+				<label for="listeCompetitions" class="col-form-label">Compétitions </label> 
 				<select
 					class="form-control" id="listeCompetitions">
 					<c:forEach items="${listeCompetitions}" var="competition">
-						<option>test</option>
+						<option>${competition.libelle}</option>
 					</c:forEach>
 				</select>
 			</div>

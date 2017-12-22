@@ -18,7 +18,7 @@ public class TypeTourDAO {
 		Connection co = this.daoFactory.getConnection();
 
 		try {
-			String sql = "select IDTYPETOUR, LIBELLETYPETOUR from TYPETOUR"
+			String sql = "select IDTYPETOUR, LIBELLETYPETOUR from TYPETOUR "
 					+ "where IDTYPETOUR = ?";
 			PreparedStatement requete = co.prepareStatement(sql);
 			requete.setInt(1, idTypeTour);
@@ -31,7 +31,8 @@ public class TypeTourDAO {
 						);
 			}
 		} catch (SQLException e) {
-			
+			e.printStackTrace();
+			throw new SQLException("Erreur technique. Veuillez contacter l'administrateur système.");
 		} finally {
 			co.close();
 		}

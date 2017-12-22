@@ -22,6 +22,7 @@ public class CompetitionServlet extends HttpServlet {
 	public static final String VUE = "/WEB-INF/competition.jsp";
 	public static final String ATTR_SESSION_USERBEAN = "userBean";
 	public static final String CONF_DAOFACTORY = "daofactory";
+	public static final String RESP_ERRORS = "erreurs";
 	
 	private CompetitionDAO competitionDAO;
 	
@@ -44,8 +45,8 @@ public class CompetitionServlet extends HttpServlet {
         	// TODO: On récupère toutes les données à envoyer
         	NotationForm form = new NotationForm(competitionDAO);
         	ArrayList<CompetitionBean>listCompet = form.getCompetitionsByUser(((UtilisateurBean)session.getAttribute("userBean")).getId());
-        	
-        	request.setAttribute("competitions", listCompet);
+        	request.setAttribute("listeCompetitions", listCompet);
+        	request.setAttribute(RESP_ERRORS, form.getErreurs());
             /* Affichage de la page restreinte */
         	this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
         }
