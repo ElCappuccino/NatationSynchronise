@@ -1,3 +1,7 @@
+/*
+	Style des blocs
+*/
+
 html {
 	width : 100%;
 	height : 100%;
@@ -17,11 +21,9 @@ body {
 	background-color: rgba(255, 255, 255, 0.6);
 }
 
-.bandeNoire {
-	margin-top : 15px;
-	margin-bottom : 15px;
-	padding : 10px 20px 10px 50px;
-	background-color: rgba(0, 0, 0, 0.6);
+.menu {
+	margin-top : 40px;
+	margin-bottom : 40px;
 }
 
 .bandeNoire {
@@ -31,6 +33,21 @@ body {
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
+.bandeBlanche {
+	margin-top : 40px;
+	margin-bottom : 40px;
+	padding : 10px 20px 10px 50px;
+	background-color: #f7f7f7;
+}
+
+/*
+	Styles éléments simples
+*/
+
 .white {
 	color : #fff;
+}
+
+.fondNoir {
+	background-color: rgba(0, 0, 0, 0.4);
 }
