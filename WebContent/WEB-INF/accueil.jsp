@@ -9,8 +9,9 @@
 		<jsp:include page="parts/logo.jsp" />
 		<jsp:include page="parts/menu.jsp" />
 		<div class="container">
-			<h1>Coucou :3</h1>
-			<input class="btn btn-success" type="button" name="btn" value="TEST" />
+			<div class="row justify-content-center blocFondBlanc">
+				Ceci est le corps d'une page
+			</div>
 		</div>
 		
 		<jsp:include page="parts/footer.jsp" />
