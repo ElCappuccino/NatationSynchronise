@@ -10,8 +10,8 @@
 		Hors container car occupe toujours toute la largeur de l'ecran
 	 	--%>
 		<jsp:include page="parts/logo.jsp" />
-		<div class="col-lg-12 bandeNoire">
-			<div class="col-offset-5.col-3 h1 white">Connexion</div>
+		<div class="col-lg-12 bandeBlanche">
+			<div class="col-offset-5.col-3 h1">Connexion</div>
 		</div>
 		
 		<div class="container">
