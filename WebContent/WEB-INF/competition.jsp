@@ -6,6 +6,7 @@
 	<jsp:include page="parts/head.jsp" />
 	
 	<body>
+		<jsp:include page="parts/logo.jsp" />
 		<jsp:include page="parts/menu.jsp" />
 		
 		<div class="container">
