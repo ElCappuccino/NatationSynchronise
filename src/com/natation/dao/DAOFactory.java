@@ -69,7 +69,17 @@ public class DAOFactory {
 		return new CompetitionDAO(this);
 	}
 	
+	/**
+	 * @return DAO lié à un lieu
+	 */
 	public LieuDAO getLieuDAO() {
 		return new LieuDAO(this);
+	}
+	
+	/**
+	 * @return DAO lié à une catégorie
+	 */
+	public CategorieDAO getCategorieDAO() {
+		return new CategorieDAO(this);
 	}
 }
