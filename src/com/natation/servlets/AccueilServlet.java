@@ -12,12 +12,10 @@ import javax.servlet.http.HttpSession;
  */
 public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	public static final String VUE = "/WEB-INF/accueil.jsp";
 	public static final String REDIRECT = "/connect";
 	public static final String NAME = "accueil";
 	public static final String ATTR_SESSION_USERBEAN = "userBean";
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
