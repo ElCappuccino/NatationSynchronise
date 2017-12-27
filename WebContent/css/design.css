@@ -20,6 +20,10 @@ footer {
 	margin-top : 20px;
 }
 
+h1 {
+	margin-bottom : 20px;
+}
+
 .blocFondBlanc {
 	padding : 15px;
 	background-color: rgba(255, 255, 255, 0.6);
