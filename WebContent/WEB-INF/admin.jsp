@@ -17,8 +17,13 @@
 				      <div class="card-block">
 				        <h3 class="card-title">Importer des nageuses</h3>
 				        <p class="card-text">Ajouter un fichier CSV puis cliquer sur Importer</p>
-				        <a href="#" class="btn btn-primary">Parcourir...</a>
-				        <a href="#" class="btn btn-success">Importer!</a>
+				        <form action="uploadNageuses" method="post" enctype="multipart/form-data">
+				        	<%-- Hack pour pouvoir appliquer le style bootstrap aux boutons type "file" --%>
+				        	<label class="btn btn-primary" style="margin-bottom: 0px; !important">
+							    Parcourir...<input type="file" name="csvNageuses" id="csvNageuses" hidden>
+							</label>
+							<input type="submit" class="btn btn-success" value="Importer!" name="subCsvNageuses" id="subCsvNageuses">
+				        </form>
 				      </div>
 				    </div>
 				  </div>
@@ -35,6 +40,8 @@
 			</div>
 		</div>
 		
+		<script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/NotationJS.js"></script>
 		<jsp:include page="parts/footer.jsp" />
 	</body>
 </html>
