@@ -84,6 +84,13 @@ public class DAOFactory {
 	}
 	
 	/**
+	 * @return DAO lié à un tour
+	 */
+	public TourDAO getTourDAO() {
+		return new TourDAO(this);
+	}
+	
+	/**
 	 * @return DAO lié au type de tour
 	 */
 	public TypeTourDAO getTypeTourDAO() {

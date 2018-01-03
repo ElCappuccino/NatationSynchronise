@@ -24,7 +24,7 @@
 					<div class="col-10">
 						<select class="form-control" id="listeCompetitions">
 							<c:forEach items="${listeCompetitions}" var="competition">
-								<option>${competition.libelle}</option>
+								<option value="${competition.id}">${competition.libelle}</option>
 							</c:forEach>
 						</select>
 					</div>

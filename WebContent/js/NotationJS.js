@@ -23,5 +23,7 @@ function getXMLHttpRequest() {
 }
 
 function competitionChange() {
-	alert("Ca marche !");
+	var url = "competition?selection=competition&valeur=" + escape(competitions.options[competitions.selectedIndex].value);
+	xhr.open("GET", url, true);
+	xhr.send(null);
 }
