@@ -56,4 +56,15 @@
 		<servlet-name>logout</servlet-name>
 		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
+	
+	
+	<!-- Repertoire à utiliser lors d'upload de fichiers via formulaires ou autres 
+	(doit etre existant, pas créé en auto) -->
+	<context-param> 
+		<description>repertoire uploads</description> 
+      	<param-name>file-upload</param-name> 
+      	<param-value>
+         	d:\zz_uploadsNatSync
+      	</param-value> 
+   </context-param>
 </web-app>
