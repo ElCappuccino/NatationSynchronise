@@ -1,6 +1,7 @@
 package com.natation.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -53,19 +54,26 @@ public class CompetitionServlet extends HttpServlet {
         	ArrayList<CompetitionBean>listCompet = form.getCompetitionsByUser(((UtilisateurBean)session.getAttribute("userBean")).getId());
         	request.setAttribute("listeCompetitions", listCompet);
         	
-        	
         	// On vérifie si on a une sélection dans une des listes
         	String selec = request.getParameter("selection");
-        	if(!selec.equals(null)) {
+        	if(selec != null) {
         		String value = request.getParameter("valeur");
         		
         		// Selon la liste
             	if(selec.equals("competition")) {
             		// On récupère les tours selon la valeur récupérée: erreur a ajouter si convertion en int fail
             		ArrayList<TourBean>listTours = form.getTourByIdCompetition(value);
-            		request.setAttribute("listeTours", listTours);
+            		for(TourBean t : listTours) {
+            			System.out.println(t.getId());
+            			System.out.println(t.getType().getLibelle());
+            		}
+            		// request.setAttribute("listeTours", listTours);
+            		// TODO On formate la liste en json avant envois
+            		 response.getWriter().write("coucou");
+            		 /*PrintWriter out = response.getWriter();
+            		 out.println("TEEEEST");*/
+            		 return;
             	}
-            	
         	}
         	
         	request.setAttribute(RESP_ERRORS, form.getErreurs());

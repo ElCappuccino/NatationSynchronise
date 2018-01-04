@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import com.natation.beans.TourBean;
 import com.natation.beans.TypeTourBean;
 
@@ -16,9 +18,8 @@ public class TourDAO {
 		daoTypeTour = factory.getTypeTourDAO();
 	}
 	
-	public TourBean getTourByIdCompetition(int idCompetition) throws SQLException {
-		TourBean tour = null;
-		
+	public ArrayList<TourBean> getTourByIdCompetition(int idCompetition) throws SQLException {
+		ArrayList<TourBean> listTour = new ArrayList<>();
 		Connection co = this.daoFactory.getConnection();
 
 		try {
@@ -27,16 +28,17 @@ public class TourDAO {
 			PreparedStatement requete = co.prepareStatement(sql);
 			requete.setInt(1, idCompetition);
 			ResultSet rs = requete.executeQuery();
-			
-			if(rs.next()) {
-				tour = new TourBean(
+			while(rs.next()) {
+				TourBean tour = new TourBean(
 						rs.getInt(1),
 						null,
 						rs.getInt(2)
 						);
 				TypeTourBean typeTour = daoTypeTour.getTypeTourById(rs.getInt(3));
 				tour.setType(typeTour);
+				listTour.add(tour);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException("Erreur technique. Veuillez contacter l'administrateur système.");
@@ -44,6 +46,6 @@ public class TourDAO {
 			co.close();
 		}
 		
-		return tour;
+		return listTour;
 	}
 }

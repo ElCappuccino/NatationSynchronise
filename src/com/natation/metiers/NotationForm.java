@@ -33,7 +33,7 @@ public class NotationForm {
 		ArrayList<TourBean> list = null;
 		try {
 			int val = Integer.parseInt(idCompetition);
-			tourDAO.getTourByIdCompetition(val); // On ne devrait pas avoir plusieurs tour par competition ? Probleme dans DAO
+			list = tourDAO.getTourByIdCompetition(val); // On ne devrait pas avoir plusieurs tour par competition ? Probleme dans DAO
 		} catch(Exception e) {
 			erreurs.put("getTourByIdCompetition", e.getMessage());
 		}
