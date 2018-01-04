@@ -19,13 +19,12 @@ public class AdminServlet extends HttpServlet {
 	public static final String ATTR_SESSION_USERBEAN = "userBean";
 	public static final String CONF_DAOFACTORY = "daofactory";
 	
-//	private CompetitionDAO competitionDAO;
-//	
-//	@Override
-//	public void init() throws ServletException {
-//        /* Récupération d'une instance de DAOUtilisateur */
-//        this.competitionDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getCompetitionDao();
-//    }
+	private String pathCsv;
+
+	public void init( ){
+		// Recuperation chemin stockage CSV à partir de web.xml
+		pathCsv = getServletContext().getInitParameter("file-upload"); 
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -36,8 +35,9 @@ public class AdminServlet extends HttpServlet {
             response.sendRedirect( request.getContextPath() + REDIRECT );
         } else {
             /* Affichage de la page d'admin seulement si l'utilisateur est ADMIN */
-        	if( u.getAdmin() )
+        	if( u.getAdmin() ) {
         		this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
+        	}
         	else
         		response.sendRedirect( request.getContextPath() + REDIRECT );
         }

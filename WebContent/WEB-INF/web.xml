@@ -64,7 +64,7 @@
 		<description>repertoire uploads</description> 
       	<param-name>file-upload</param-name> 
       	<param-value>
-         	d:\zz_uploadsNatSync
+         	c:\zz_uploadsNatSync
       	</param-value> 
    </context-param>
 </web-app>
