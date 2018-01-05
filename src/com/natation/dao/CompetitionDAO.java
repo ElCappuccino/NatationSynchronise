@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import com.natation.beans.CategorieBean;
 import com.natation.beans.CompetitionBean;
@@ -45,8 +46,8 @@ public class CompetitionDAO {
 						rs.getInt(1),
 						null,
 						idUtilisateur,
-						rs.getDate(5),
-						rs.getDate(6),
+						LocalDate.parse(rs.getString(5)),
+						LocalDate.parse(rs.getString(6)),
 						rs.getString(7),
 						null
 						);

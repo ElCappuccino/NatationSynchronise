@@ -1,13 +1,13 @@
 package com.natation.beans;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class CompetitionBean {
 	private int id;
 	private CategorieBean categorie;
 	private String idUtilisateur;
-	private Date dateDebut;
-	private Date dateFin;
+	private LocalDate dateDebut;
+	private LocalDate dateFin;
 	private String libelle;
 	private LieuBean lieu;
 
@@ -18,7 +18,7 @@ public class CompetitionBean {
 	 * @param idCategorie Référence à la catégorie de la compétition
 	 * @param idUtilisateur Référence au juge arbitre assigné à la compétition
 	 */
-	public CompetitionBean(int id, CategorieBean categorie, String idUtilisateur, Date dateDebut, Date dateFin, String libelle, LieuBean lieu) {
+	public CompetitionBean(int id, CategorieBean categorie, String idUtilisateur, LocalDate dateDebut, LocalDate dateFin, String libelle, LieuBean lieu) {
 		this.id = id;
 		this.categorie = categorie;
 		this.idUtilisateur = idUtilisateur;
@@ -60,28 +60,28 @@ public class CompetitionBean {
 	/**
 	 * @return Date du début de la compétition
 	 */
-	public Date getDateDebut() {
+	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
 
 	/**
 	 * @param dateDebut Date du début de la compétition
 	 */
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
 	/**
 	 * @return Date de fin de la compétition
 	 */
-	public Date getDateFin() {
+	public LocalDate getDateFin() {
 		return dateFin;
 	}
 
 	/**
 	 * @param dateFin Date de fin de la compétition
 	 */
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
 
