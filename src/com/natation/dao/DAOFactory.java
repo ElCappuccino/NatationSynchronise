@@ -96,4 +96,18 @@ public class DAOFactory {
 	public TypeTourDAO getTypeTourDAO() {
 		return new TypeTourDAO(this);
 	}
+	
+	/**
+	 * @return DAO lié à une épreuve
+	 */
+	public EpreuveDAO getEpreuveDAO() {
+		return new EpreuveDAO(this);
+	}
+	
+	/**
+	 * @return DAO lié à un type d'épreuve
+	 */
+	public TypeEpreuveDAO getTypeEpreuveDAO() {
+		return new TypeEpreuveDAO(this);
+	}
 }
