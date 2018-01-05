@@ -1,13 +1,17 @@
 package com.natation.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.natation.beans.CompetitionBean;
 import com.natation.beans.TourBean;
 import com.natation.beans.UtilisateurBean;
@@ -48,11 +52,7 @@ public class CompetitionServlet extends HttpServlet {
             /* Redirection vers la page publique */
             response.sendRedirect( request.getContextPath() + REDIRECT );
         } else {
-        	
         	NotationForm form = new NotationForm(competitionDAO, tourDAO);
-        	// On récupère toutes les compétitions pour la liste
-        	ArrayList<CompetitionBean>listCompet = form.getCompetitionsByUser(((UtilisateurBean)session.getAttribute("userBean")).getId());
-        	request.setAttribute("listeCompetitions", listCompet);
         	
         	// On vérifie si on a une sélection dans une des listes
         	String selec = request.getParameter("selection");
@@ -61,19 +61,23 @@ public class CompetitionServlet extends HttpServlet {
         		
         		// Selon la liste
             	if(selec.equals("competition")) {
-            		// On récupère les tours selon la valeur récupérée: erreur a ajouter si convertion en int fail
+            		// On récupère les tours selon la valeur récupérée
             		ArrayList<TourBean>listTours = form.getTourByIdCompetition(value);
+            		final GsonBuilder builder = new GsonBuilder();
+            		final Gson gson = builder.create();
+            		Map<Integer, String> mapTours = new HashMap<>();
             		for(TourBean t : listTours) {
-            			System.out.println(t.getId());
-            			System.out.println(t.getType().getLibelle());
+            			mapTours.put(t.getId(), t.getType().getLibelle());
             		}
-            		// request.setAttribute("listeTours", listTours);
-            		// TODO On formate la liste en json avant envois
-            		 response.getWriter().write("coucou");
-            		 /*PrintWriter out = response.getWriter();
-            		 out.println("TEEEEST");*/
-            		 return;
+            		final String json = gson.toJson(mapTours);
+					response.getWriter().write(json);
+					return;
             	}
+            	// TODO Ballet
+        	} else {
+        		// On récupère toutes les compétitions pour la liste
+            	ArrayList<CompetitionBean>listCompet = form.getCompetitionsByUser(((UtilisateurBean)session.getAttribute("userBean")).getId());
+            	request.setAttribute("listeCompetitions", listCompet);
         	}
         	
         	request.setAttribute(RESP_ERRORS, form.getErreurs());
