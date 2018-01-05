@@ -73,6 +73,8 @@ public class CompetitionServlet extends HttpServlet {
 					response.getWriter().write(json);
 					return;
             	}
+            	// TODO Epreuve
+            	
             	// TODO Ballet
         	} else {
         		// On récupère toutes les compétitions pour la liste
