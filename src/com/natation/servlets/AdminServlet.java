@@ -18,13 +18,6 @@ public class AdminServlet extends HttpServlet {
 	public static final String VUE = "/WEB-INF/admin.jsp";
 	public static final String ATTR_SESSION_USERBEAN = "userBean";
 	public static final String CONF_DAOFACTORY = "daofactory";
-	
-	private String pathCsv;
-
-	public void init( ){
-		// Recuperation chemin stockage CSV à partir de web.xml
-		pathCsv = getServletContext().getInitParameter("file-upload"); 
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
