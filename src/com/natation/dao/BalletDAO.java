@@ -22,12 +22,20 @@ public class BalletDAO {
 		Connection co = this.daoFactory.getConnection();
 
 		try {
-			String sql = "";
+			String sql = "select * from ballet where idEpreuve = ?";
 			PreparedStatement requete = co.prepareStatement(sql);
 			requete.setInt(1, idEpreuve);
 			ResultSet rs = requete.executeQuery();
 			while(rs.next()) {
+				BalletBean ballet = new BalletBean(
+						rs.getInt(1),
+						null,
+						rs.getInt(3),
+						rs.getDouble(4)
+						);
+				ballet.setTypeBallet(daoTypeBallet.getTypeBalletById(rs.getInt(2)));
 				
+				listeBallet.add(ballet);
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();

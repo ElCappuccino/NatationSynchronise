@@ -12,10 +12,12 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.natation.beans.BalletBean;
 import com.natation.beans.CompetitionBean;
 import com.natation.beans.EpreuveBean;
 import com.natation.beans.TourBean;
 import com.natation.beans.UtilisateurBean;
+import com.natation.dao.BalletDAO;
 import com.natation.dao.CompetitionDAO;
 import com.natation.dao.DAOFactory;
 import com.natation.dao.EpreuveDAO;
@@ -36,12 +38,14 @@ public class CompetitionServlet extends HttpServlet {
 	private CompetitionDAO competitionDAO;
 	private TourDAO tourDAO;
 	private EpreuveDAO epreuveDAO;
+	private BalletDAO balletDAO;
 	
 	@Override
 	public void init() throws ServletException {
         this.competitionDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getCompetitionDao();
         this.tourDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getTourDAO();
         this.epreuveDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEpreuveDAO();
+        this.balletDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getBalletDAO();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,7 +59,7 @@ public class CompetitionServlet extends HttpServlet {
             /* Redirection vers la page publique */
             response.sendRedirect( request.getContextPath() + REDIRECT );
         } else {
-        	NotationForm form = new NotationForm(competitionDAO, tourDAO, epreuveDAO);
+        	NotationForm form = new NotationForm(competitionDAO, tourDAO, epreuveDAO, balletDAO);
         	
         	// On vérifie si on a une sélection dans une des listes
         	String selec = request.getParameter("selection");
@@ -87,11 +91,17 @@ public class CompetitionServlet extends HttpServlet {
 					return;
             	} else if(selec.equals("epreuve")) {
             		// TODO Epreuve
-            		System.out.println(value);
-            		
-            		
+            		ArrayList<BalletBean> listBallets = form.getBalletByIdEpreuve(value);
+            		Map<Integer, String> mapBallets = new HashMap<>();
+            		for(BalletBean b : listBallets) {
+            			mapBallets.put(b.getId(), b.getTypeBallet().getLibelle());
+            		}
+            		final String json = gson.toJson(mapBallets);
+					response.getWriter().write(json);
+					return;
             	} else if(selec.equals("ballet")) {
             		// TODO Ballet
+            		System.out.println(value);
             	}
             	
         	} else {

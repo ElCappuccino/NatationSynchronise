@@ -4,9 +4,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.natation.beans.BalletBean;
 import com.natation.beans.CompetitionBean;
 import com.natation.beans.EpreuveBean;
 import com.natation.beans.TourBean;
+import com.natation.dao.BalletDAO;
 import com.natation.dao.CompetitionDAO;
 import com.natation.dao.EpreuveDAO;
 import com.natation.dao.TourDAO;
@@ -15,6 +18,7 @@ public class NotationForm {
 	private CompetitionDAO competitionDAO;
 	private TourDAO tourDAO;
 	private EpreuveDAO epreuveDAO;
+	private BalletDAO balletDAO;
 	private Map<String, String> erreurs = new HashMap<>();
 	
 	/**
@@ -22,10 +26,11 @@ public class NotationForm {
 	 * @param competitionDAO
 	 * @param tourDAO
 	 */
-	public NotationForm(CompetitionDAO competitionDAO, TourDAO tourDAO, EpreuveDAO epreuveDAO) {
+	public NotationForm(CompetitionDAO competitionDAO, TourDAO tourDAO, EpreuveDAO epreuveDAO, BalletDAO balletDAO) {
 		this.competitionDAO = competitionDAO;
 		this.tourDAO = tourDAO;
 		this.epreuveDAO = epreuveDAO;
+		this.balletDAO = balletDAO;
 	}
 	
 	/**
@@ -59,11 +64,27 @@ public class NotationForm {
 		return list;
 	}
 	
+	/**
+	 * Récupère une liste d'epreuve associé à un tour
+	 * @param idTour
+	 * @return Liste d'epreuve
+	 */
 	public ArrayList<EpreuveBean> getEpreuveByIdTour(String idTour) {
 		ArrayList<EpreuveBean> list = null;
 		try {
 			int val = Integer.parseInt(idTour);
 			list = epreuveDAO.getEpreuveByIdTour(val);
+		} catch(Exception e) {
+			erreurs.put("getEpreuveByIdTour", e.getMessage());
+		}
+		return list;
+	}
+	
+	public ArrayList<BalletBean> getBalletByIdEpreuve(String idEpreuve) {
+		ArrayList<BalletBean> list = null;
+		try {
+			int val = Integer.parseInt(idEpreuve);
+			list = balletDAO.getBalletByIdEpreuve(val);
 		} catch(Exception e) {
 			erreurs.put("getEpreuveByIdTour", e.getMessage());
 		}

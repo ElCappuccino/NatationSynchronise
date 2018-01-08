@@ -7,6 +7,7 @@ var ballets = document.querySelector("#listeBallets");
 competitions.addEventListener('change', competitionChange);
 tours.addEventListener('change', tourChange);
 epreuves.addEventListener('change', epreuveChange);
+ballets.addEventListener('change', balletChange);
 
 // ---- AJAX
 
@@ -85,6 +86,10 @@ function readDataBallet(data) {
 	}
 }
 
+function readDataNageuse(data) {
+
+}
+
 //---------
 
 //---- Event change
@@ -126,6 +131,15 @@ function epreuveChange() {
     	return;
     var url = "competition?selection=epreuve&valeur=" + value;
 	request(readDataBallet, url);
+}
+
+function balletChange() {
+	// On envoit la requete
+	var value =  escape(ballets.options[ballets.selectedIndex].value);
+    if(value == "0")
+    	return;
+    var url = "competition?selection=ballet&valeur=" + value;
+	request(readDataNageuse, url);
 }
 
 //---------
