@@ -77,6 +77,13 @@ public class DAOFactory {
 	}
 	
 	/**
+	 * @return DAO lié à un lieu
+	 */
+	public NageuseDAO getNageuseDAO() {
+		return new NageuseDAO(this);
+	}
+	
+	/**
 	 * @return DAO lié à une catégorie
 	 */
 	public CategorieDAO getCategorieDAO() {
