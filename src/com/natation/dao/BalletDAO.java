@@ -4,31 +4,30 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-import com.natation.beans.TypeEpreuveBean;
+import com.natation.beans.BalletBean;
 
-public class TypeEpreuveDAO {
+public class BalletDAO {
 	private DAOFactory daoFactory;
+	private TypeBalletDAO daoTypeBallet;
 	
-	public TypeEpreuveDAO(DAOFactory factory) {
+	public BalletDAO(DAOFactory factory) {
 		this.daoFactory = factory;
+		this.daoTypeBallet = factory.getTypeBalletDAO();
 	}
 	
-	public TypeEpreuveBean getTypeEpreuveById(int idTypeEpreuve) throws SQLException {
-		TypeEpreuveBean typeEpreuve = null;
-		
+	public ArrayList<BalletBean> getBalletByIdEpreuve(int idEpreuve) throws SQLException {
+		ArrayList<BalletBean> listeBallet = new ArrayList<>();
 		Connection co = this.daoFactory.getConnection();
-		try {
-			String sql = "select * from typeepreuve where idtypeepreuve = ?";
-			PreparedStatement requete = co.prepareStatement(sql);
-			requete.setInt(1, idTypeEpreuve);
 
+		try {
+			String sql = "";
+			PreparedStatement requete = co.prepareStatement(sql);
+			requete.setInt(1, idEpreuve);
 			ResultSet rs = requete.executeQuery();
-			if(rs.next()) {
-				typeEpreuve = new TypeEpreuveBean(
-						rs.getInt(1),
-						rs.getString(2)
-						);
+			while(rs.next()) {
+				
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -36,6 +35,6 @@ public class TypeEpreuveDAO {
 		} finally {
 			co.close();
 		}
-		return typeEpreuve;
+		return listeBallet;
 	}
 }

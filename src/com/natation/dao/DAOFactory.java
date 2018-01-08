@@ -110,4 +110,18 @@ public class DAOFactory {
 	public TypeEpreuveDAO getTypeEpreuveDAO() {
 		return new TypeEpreuveDAO(this);
 	}
+	
+	/**
+	 * @return DAO lié à un ballet
+	 */
+	public BalletDAO getBalletDAO() {
+		return new BalletDAO(this);
+	}
+	
+	/**
+	 * @return DAO lié à un type de ballet
+	 */
+	public TypeBalletDAO getTypeBalletDAO() {
+		return new TypeBalletDAO(this);
+	}
 }

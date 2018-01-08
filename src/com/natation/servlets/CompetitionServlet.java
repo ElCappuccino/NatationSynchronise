@@ -13,10 +13,12 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.natation.beans.CompetitionBean;
+import com.natation.beans.EpreuveBean;
 import com.natation.beans.TourBean;
 import com.natation.beans.UtilisateurBean;
 import com.natation.dao.CompetitionDAO;
 import com.natation.dao.DAOFactory;
+import com.natation.dao.EpreuveDAO;
 import com.natation.dao.TourDAO;
 import com.natation.metiers.NotationForm;
 
@@ -33,12 +35,13 @@ public class CompetitionServlet extends HttpServlet {
 	
 	private CompetitionDAO competitionDAO;
 	private TourDAO tourDAO;
+	private EpreuveDAO epreuveDAO;
 	
 	@Override
 	public void init() throws ServletException {
-        /* Récupération d'une instance de DAOUtilisateur */
         this.competitionDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getCompetitionDao();
         this.tourDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getTourDAO();
+        this.epreuveDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEpreuveDAO();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,19 +55,20 @@ public class CompetitionServlet extends HttpServlet {
             /* Redirection vers la page publique */
             response.sendRedirect( request.getContextPath() + REDIRECT );
         } else {
-        	NotationForm form = new NotationForm(competitionDAO, tourDAO);
+        	NotationForm form = new NotationForm(competitionDAO, tourDAO, epreuveDAO);
         	
         	// On vérifie si on a une sélection dans une des listes
         	String selec = request.getParameter("selection");
         	if(selec != null) {
         		String value = request.getParameter("valeur");
+        		final GsonBuilder builder = new GsonBuilder();
+        		final Gson gson = builder.create();
         		
         		// Selon la liste
             	if(selec.equals("competition")) {
             		// On récupère les tours selon la valeur récupérée
-            		ArrayList<TourBean>listTours = form.getTourByIdCompetition(value);
-            		final GsonBuilder builder = new GsonBuilder();
-            		final Gson gson = builder.create();
+            		ArrayList<TourBean> listTours = form.getTourByIdCompetition(value);
+            		
             		Map<Integer, String> mapTours = new HashMap<>();
             		for(TourBean t : listTours) {
             			mapTours.put(t.getId(), t.getType().getLibelle());
@@ -72,10 +76,24 @@ public class CompetitionServlet extends HttpServlet {
             		final String json = gson.toJson(mapTours);
 					response.getWriter().write(json);
 					return;
+            	} else if(selec.equals("tour")) {
+            		ArrayList<EpreuveBean> listEpreuves = form.getEpreuveByIdTour(value);
+            		Map<Integer, String> mapEpreuves = new HashMap<>();
+            		for(EpreuveBean e : listEpreuves) {
+            			mapEpreuves.put(e.getId(), e.getTypeEpreuve().getLibelle());
+            		}
+            		final String json = gson.toJson(mapEpreuves);
+					response.getWriter().write(json);
+					return;
+            	} else if(selec.equals("epreuve")) {
+            		// TODO Epreuve
+            		System.out.println(value);
+            		
+            		
+            	} else if(selec.equals("ballet")) {
+            		// TODO Ballet
             	}
-            	// TODO Epreuve
             	
-            	// TODO Ballet
         	} else {
         		// On récupère toutes les compétitions pour la liste
             	ArrayList<CompetitionBean>listCompet = form.getCompetitionsByUser(((UtilisateurBean)session.getAttribute("userBean")).getId());

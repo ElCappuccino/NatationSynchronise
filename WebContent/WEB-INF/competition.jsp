@@ -42,9 +42,31 @@
 					</div>
 					<div class="col-10">
 						<select class="form-control" id="listeTours">
-							<c:forEach items="${listeTours}" var="tour">
-								<option value="${tour.id}">test</option>
-							</c:forEach>
+							
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-2">
+						<label for="listeEpreuves" class="col-form-label">Epreuves
+						</label>
+					</div>
+					<div class="col-10">
+						<select class="form-control" id="listeEpreuves">
+							
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-2">
+						<label for="listeBallets" class="col-form-label">Ballets
+						</label>
+					</div>
+					<div class="col-10">
+						<select class="form-control" id="listeBallets">
+							
 						</select>
 					</div>
 				</div>
