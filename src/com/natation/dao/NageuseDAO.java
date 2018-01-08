@@ -1,6 +1,7 @@
 package com.natation.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,21 +50,34 @@ public class NageuseDAO {
 	/**
 	 * Créé la nageuse spécifiée en paramètre dans la base de données
 	 * @param nageuse
+	 * @return id de la nageuse inserée si OK, -1 sinon.
 	 * @throws SQLException 
 	 */
-	public void createNageuse(NageuseBean nageuse) throws SQLException {
-
+	public int createNageuse(NageuseBean nageuse) throws SQLException {
+		int insertedId = -1;
+		
 		if (nageuse != null) {
 			Connection co = this.daoFactory.getConnection();
-
 			try {
-				// TODO: requete d'insertion d'une nageuse
-			} catch (Exception e) {
+				String sql = "insert into Nageuse (nomNageuse, prenomNageuse, dateNaissanceNageuse) "
+						+ "values(?,?,?) returning idNageuse";
+				PreparedStatement requete = co.prepareStatement(sql);
+				requete.setString(1, nageuse.getNom());
+				requete.setString(2, nageuse.getPrenom());
+				requete.setDate(3, Date.valueOf(nageuse.getDateNaissance()) );
+				ResultSet rs = requete.executeQuery();
+
+				if (rs.next()) {
+					insertedId = rs.getInt(1);
+				}
+			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new SQLException("Erreur technique. Veuillez contacter l'administrateur système.");
 			} finally {
 				co.close();
 			}
 		}
+		
+		return insertedId;
 	}
 }
