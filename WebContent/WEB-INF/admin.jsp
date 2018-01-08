@@ -24,7 +24,7 @@
 							<h3 class="card-title">Importer des nageuses</h3>
 							<p class="card-text">Ajouter un fichier CSV puis cliquer sur
 								Importer</p>
-							<form action="uploadNageuses" method="post"
+							<form action="" method="post"
 								enctype="multipart/form-data">
 								<%-- Hack pour pouvoir appliquer le style bootstrap aux boutons type "file" --%>
 								<label class="btn btn-primary"

@@ -32,23 +32,43 @@ public class AdminServlet extends HttpServlet {
         this.nageuseDAO = ( (DAOFactory) getServletContext().getAttribute( CONF_DAOFACTORY ) ).getNageuseDAO();
     }
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
 		UtilisateurBean u = (UtilisateurBean) session.getAttribute( ATTR_SESSION_USERBEAN );
 		AdminForm af = new AdminForm(this.nageuseDAO);
 		
         if ( u == null ) {
             /* Redirection vers la page publique */
-            response.sendRedirect( request.getContextPath() + REDIRECT );
+            resp.sendRedirect( req.getContextPath() + REDIRECT );
         } else {
             /* Affichage de la page d'admin seulement si l'utilisateur est ADMIN */
         	if( u.getAdmin() ) {
-        		this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
-				af.uploadCsv(request);
-				request.setAttribute("erreurs", af.getErreurs());
+        		this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);
+				req.setAttribute("erreurs", af.getErreurs());
         	}
         	else
-        		response.sendRedirect( request.getContextPath() + REDIRECT );
+        		resp.sendRedirect( req.getContextPath() + REDIRECT );
+        }
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		UtilisateurBean u = (UtilisateurBean) session.getAttribute( ATTR_SESSION_USERBEAN );
+		AdminForm af = new AdminForm(this.nageuseDAO);
+		
+        if ( u == null ) {
+            /* Redirection vers la page publique */
+        	resp.sendRedirect( req.getContextPath() + REDIRECT );
+        } else {
+            /* Affichage de la page d'admin seulement si l'utilisateur est ADMIN */
+        	if( u.getAdmin() ) {
+        		this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);
+				af.uploadCsv(req);
+				req.setAttribute("erreurs", af.getErreurs());
+        	}
+        	else
+        		resp.sendRedirect( req.getContextPath() + REDIRECT );
         }
 	}
 
