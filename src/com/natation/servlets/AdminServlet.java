@@ -34,7 +34,22 @@ public class AdminServlet extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
+		HttpSession session = req.getSession();
+		UtilisateurBean u = (UtilisateurBean) session.getAttribute( ATTR_SESSION_USERBEAN );
+		AdminForm af = new AdminForm(this.nageuseDAO);
+		
+        if ( u == null ) {
+            /* Redirection vers la page publique */
+        	resp.sendRedirect( req.getContextPath() + REDIRECT );
+        } else {
+            /* Affichage de la page d'admin seulement si l'utilisateur est ADMIN */
+        	if( u.getAdmin() ) {
+				req.setAttribute("messages", af.getMessages());
+				this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);
+        	}
+        	else
+        		resp.sendRedirect( req.getContextPath() + REDIRECT );
+        }
 	}
 	
 	@Override
@@ -49,9 +64,8 @@ public class AdminServlet extends HttpServlet {
         } else {
             /* Affichage de la page d'admin seulement si l'utilisateur est ADMIN */
         	if( u.getAdmin() ) {
-        		System.out.println(req.getParameter("csvNageuses"));
 				af.uploadCsv(req);
-				req.setAttribute("erreurs", af.getErreurs());
+				req.setAttribute("messages", af.getMessages());
 				this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);
         	}
         	else

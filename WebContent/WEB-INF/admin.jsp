@@ -15,9 +15,19 @@
 				<%-- 
 				Affichage des messages d'erreur
 		 		--%>
-				<c:if test="${not empty erreurs['errLogin']}">
-					<div class="alert alert-danger">${ erreurs['errLogin'] }</div>
-				</c:if>
+		 		<div class="col-sm-12">
+					<c:if test="${not empty erreurs['errImport']}">
+						<div class="alert alert-danger">${ erreurs['errImport'] }</div>
+					</c:if>
+				</div>
+				<%-- 
+				Affichage des messages de succès
+		 		--%>
+		 		<div class="col-sm-12">
+					<c:if test="${not empty erreurs['errImport']}">
+						<div class="alert alert-danger">${ erreurs['errImport'] }</div>
+					</c:if>
+				</div>
 				<div class="col-md-6">
 					<div class="card">
 						<div class="card-block">

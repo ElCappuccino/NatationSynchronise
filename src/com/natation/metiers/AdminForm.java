@@ -19,7 +19,7 @@ import com.opencsv.CSVReader;
 @MultipartConfig
 public final class AdminForm {
 	private NageuseDAO nageuseDAO;
-	private Map<String, String> erreurs = new HashMap<>();
+	private Map<String, String> messages = new HashMap<>();
 
 	public AdminForm(NageuseDAO n) {
 		this.nageuseDAO = n;
@@ -36,7 +36,7 @@ public final class AdminForm {
 		boolean csvReceived = false;
 
 		try {
-			if (req.getParameter("csvNageuses") != null) {
+			if (req.getPart("csvNageuses") != null) {
 				csvReceived = true;
 				List<NageuseBean> nouvellesNageuses = parseNageuses(req);
 				for (NageuseBean n : nouvellesNageuses) {
@@ -44,7 +44,7 @@ public final class AdminForm {
 				}
 			}
 		} catch (Exception e) {
-			erreurs.put("errImport", e.getMessage());
+			messages.put("errImport", e.getMessage());
 		}
 
 		return csvReceived;
@@ -74,7 +74,10 @@ public final class AdminForm {
 			// Contenu CSV attendu : nom, prenom, dateNaissance
 			String[] ligneCSV = null;
 			while ((ligneCSV = reader.readNext()) != null) {
-				NageuseBean n = new NageuseBean(ligneCSV[0], ligneCSV[1], LocalDate.parse(ligneCSV[2]));
+				NageuseBean n = new NageuseBean(
+						ligneCSV[0], 
+						ligneCSV[1], 
+						LocalDate.parse(ligneCSV[2]));
 				nouvellesNageuses.add(n);
 			}
 			reader.close();
@@ -88,7 +91,7 @@ public final class AdminForm {
 	/**
 	 * @return les erreurs
 	 */
-	public Map<String, String> getErreurs() {
-		return erreurs;
+	public Map<String, String> getMessages() {
+		return messages;
 	}
 }
