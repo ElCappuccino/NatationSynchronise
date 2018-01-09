@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
@@ -15,6 +16,7 @@ import com.natation.beans.NageuseBean;
 import com.natation.dao.NageuseDAO;
 import com.opencsv.CSVReader;
 
+@MultipartConfig
 public final class AdminForm {
 	private NageuseDAO nageuseDAO;
 	private Map<String, String> erreurs = new HashMap<>();

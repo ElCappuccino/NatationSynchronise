@@ -2,12 +2,12 @@ package com.natation.servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.tomcat.util.http.fileupload.UploadContext;
 
 import com.natation.beans.UtilisateurBean;
 import com.natation.dao.DAOFactory;
@@ -17,6 +17,7 @@ import com.natation.metiers.AdminForm;
 /**
  * Servlet implementation class CompetitionServlet
  */
+@MultipartConfig
 public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final String REDIRECT = "/connect";
@@ -33,22 +34,7 @@ public class AdminServlet extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		UtilisateurBean u = (UtilisateurBean) session.getAttribute( ATTR_SESSION_USERBEAN );
-		AdminForm af = new AdminForm(this.nageuseDAO);
-		
-        if ( u == null ) {
-            /* Redirection vers la page publique */
-            resp.sendRedirect( req.getContextPath() + REDIRECT );
-        } else {
-            /* Affichage de la page d'admin seulement si l'utilisateur est ADMIN */
-        	if( u.getAdmin() ) {
-        		this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);
-				req.setAttribute("erreurs", af.getErreurs());
-        	}
-        	else
-        		resp.sendRedirect( req.getContextPath() + REDIRECT );
-        }
+		doPost(req, resp);
 	}
 	
 	@Override
@@ -63,9 +49,10 @@ public class AdminServlet extends HttpServlet {
         } else {
             /* Affichage de la page d'admin seulement si l'utilisateur est ADMIN */
         	if( u.getAdmin() ) {
-        		this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);
+        		System.out.println(req.getParameter("csvNageuses"));
 				af.uploadCsv(req);
 				req.setAttribute("erreurs", af.getErreurs());
+				this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);
         	}
         	else
         		resp.sendRedirect( req.getContextPath() + REDIRECT );
