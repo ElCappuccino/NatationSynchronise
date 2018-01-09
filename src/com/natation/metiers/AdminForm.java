@@ -42,7 +42,11 @@ public final class AdminForm {
 				for (NageuseBean n : nouvellesNageuses) {
 					nageuseDAO.createNageuse(n);
 				}
-				messages.put("succesImport", "Importation terminée avec succès. " + nouvellesNageuses.size() + " nageuse(s) importée(s).");
+				
+				if (nouvellesNageuses.size() > 0)
+					messages.put("succesImport", "Importation terminée avec succès. " + nouvellesNageuses.size() + " nageuse(s) importée(s).");
+				else
+					messages.put("errImport", "Veuillez spécifier un fichier à importer");
 			}
 		} catch (Exception e) {
 			messages.put("errImport", e.getMessage());
