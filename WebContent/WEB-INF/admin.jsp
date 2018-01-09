@@ -16,16 +16,16 @@
 				Affichage des messages d'erreur
 		 		--%>
 		 		<div class="col-sm-12">
-					<c:if test="${not empty erreurs['errImport']}">
-						<div class="alert alert-danger">${ erreurs['errImport'] }</div>
+					<c:if test="${not empty messages['errImport']}">
+						<div class="alert alert-danger">${ messages['errImport'] }</div>
 					</c:if>
 				</div>
 				<%-- 
 				Affichage des messages de succès
 		 		--%>
 		 		<div class="col-sm-12">
-					<c:if test="${not empty erreurs['errImport']}">
-						<div class="alert alert-danger">${ erreurs['errImport'] }</div>
+					<c:if test="${not empty messages['succesImport']}">
+						<div class="alert alert-success">${ messages['succesImport'] }</div>
 					</c:if>
 				</div>
 				<div class="col-md-6">

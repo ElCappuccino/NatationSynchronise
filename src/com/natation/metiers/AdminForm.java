@@ -42,6 +42,7 @@ public final class AdminForm {
 				for (NageuseBean n : nouvellesNageuses) {
 					nageuseDAO.createNageuse(n);
 				}
+				messages.put("succesImport", "Importation terminée avec succès. " + nouvellesNageuses.size() + " nageuse(s) importée(s).");
 			}
 		} catch (Exception e) {
 			messages.put("errImport", e.getMessage());
@@ -69,7 +70,7 @@ public final class AdminForm {
 			// Création d'un CsvReader à partir du contenu envoyé
 			InputStream fileContent = filePart.getInputStream();
 			CSVReader reader = new CSVReader(new InputStreamReader(fileContent, "UTF-8"));
-
+			
 			// Creation instances NageuseBean à partir des données du csv
 			// Contenu CSV attendu : nom, prenom, dateNaissance
 			String[] ligneCSV = null;
@@ -89,7 +90,7 @@ public final class AdminForm {
 	}
 
 	/**
-	 * @return les erreurs
+	 * @return les messages à afficher à l'utilisateur
 	 */
 	public Map<String, String> getMessages() {
 		return messages;
