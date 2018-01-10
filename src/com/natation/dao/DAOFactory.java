@@ -131,4 +131,19 @@ public class DAOFactory {
 	public TypeBalletDAO getTypeBalletDAO() {
 		return new TypeBalletDAO(this);
 	}
+	
+	
+	/**
+	 * @return DAO lié à l'association ExecutionFigure
+	 */
+	public ExecutionFigureDAO getExecutionFigureDAO() {
+		return new ExecutionFigureDAO(this);
+	}
+	
+	/**
+	 * @return DAO lié à un type de figure
+	 */
+	public TypeFigureDAO getTypeFigureDAO() {
+		return new TypeFigureDAO(this);
+	}
 }

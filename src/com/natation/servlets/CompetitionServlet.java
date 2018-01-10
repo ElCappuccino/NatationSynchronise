@@ -90,7 +90,6 @@ public class CompetitionServlet extends HttpServlet {
 					response.getWriter().write(json);
 					return;
             	} else if(selec.equals("epreuve")) {
-            		// TODO Epreuve
             		ArrayList<BalletBean> listBallets = form.getBalletByIdEpreuve(value);
             		Map<Integer, String> mapBallets = new HashMap<>();
             		for(BalletBean b : listBallets) {

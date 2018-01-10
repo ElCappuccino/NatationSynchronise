@@ -138,7 +138,7 @@ function balletChange() {
 	var value =  escape(ballets.options[ballets.selectedIndex].value);
     if(value == "0")
     	return;
-    var url = "competition?selection=ballet&valeur=" + value;
+    var url = "competition?selection=ballet&valeur=" + value; // &compvaleur=competitions.selectedIndex ?
 	request(readDataNageuse, url);
 }
 
