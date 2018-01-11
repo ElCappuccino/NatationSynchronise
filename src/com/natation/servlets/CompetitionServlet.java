@@ -21,6 +21,8 @@ import com.natation.dao.BalletDAO;
 import com.natation.dao.CompetitionDAO;
 import com.natation.dao.DAOFactory;
 import com.natation.dao.EpreuveDAO;
+import com.natation.dao.EquipeCompetitionDAO;
+import com.natation.dao.ExecutionFigureDAO;
 import com.natation.dao.TourDAO;
 import com.natation.metiers.NotationForm;
 
@@ -40,12 +42,17 @@ public class CompetitionServlet extends HttpServlet {
 	private EpreuveDAO epreuveDAO;
 	private BalletDAO balletDAO;
 	
+	private ExecutionFigureDAO executionFigureDAO;
+	private EquipeCompetitionDAO equipeCompetitionDAO;
+	
 	@Override
 	public void init() throws ServletException {
         this.competitionDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getCompetitionDao();
         this.tourDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getTourDAO();
         this.epreuveDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEpreuveDAO();
         this.balletDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getBalletDAO();
+        this.executionFigureDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getExecutionFigureDAO();
+        this.equipeCompetitionDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEquipeCompetitionDAO();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -81,6 +88,7 @@ public class CompetitionServlet extends HttpServlet {
 					response.getWriter().write(json);
 					return;
             	} else if(selec.equals("tour")) {
+            		// Récupération des epreuves liées à ce tour
             		ArrayList<EpreuveBean> listEpreuves = form.getEpreuveByIdTour(value);
             		Map<Integer, String> mapEpreuves = new HashMap<>();
             		for(EpreuveBean e : listEpreuves) {
@@ -90,6 +98,7 @@ public class CompetitionServlet extends HttpServlet {
 					response.getWriter().write(json);
 					return;
             	} else if(selec.equals("epreuve")) {
+            		// Récupération des ballets liés à cette épreuve
             		ArrayList<BalletBean> listBallets = form.getBalletByIdEpreuve(value);
             		Map<Integer, String> mapBallets = new HashMap<>();
             		for(BalletBean b : listBallets) {
@@ -99,8 +108,11 @@ public class CompetitionServlet extends HttpServlet {
 					response.getWriter().write(json);
 					return;
             	} else if(selec.equals("ballet")) {
-            		// TODO Ballet
-            		System.out.println(value);
+            		// On récupère les équipes liées à la compétition sélectionné
+            		// On enleve toutes celles possédant déjà leurs notes sur ce ballet pour ce juge
+            		
+            		String valueCompet = request.getParameter("compvaleur");
+            		
             	}
             	
         	} else {

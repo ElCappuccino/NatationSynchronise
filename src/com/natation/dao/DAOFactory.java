@@ -146,4 +146,18 @@ public class DAOFactory {
 	public TypeFigureDAO getTypeFigureDAO() {
 		return new TypeFigureDAO(this);
 	}
+	
+	/**
+	 * @return DAO lié à une équipe
+	 */
+	public EquipeDAO getEquipeDAO() {
+		return new EquipeDAO(this);
+	}
+	
+	/**
+	 * @return DAO lié à l'association EquipeCompetition
+	 */
+	public EquipeCompetitionDAO getEquipeCompetitionDAO() {
+		return new EquipeCompetitionDAO(this);
+	}
 }
