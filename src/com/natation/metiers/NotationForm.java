@@ -4,14 +4,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.natation.beans.BalletBean;
 import com.natation.beans.CompetitionBean;
 import com.natation.beans.EpreuveBean;
+import com.natation.beans.EquipeBean;
+import com.natation.beans.EquipeCompetitionBean;
 import com.natation.beans.TourBean;
 import com.natation.dao.BalletDAO;
 import com.natation.dao.CompetitionDAO;
 import com.natation.dao.EpreuveDAO;
+import com.natation.dao.EquipeCompetitionDAO;
+import com.natation.dao.EquipeDAO;
+import com.natation.dao.ExecutionFigureDAO;
 import com.natation.dao.TourDAO;
 
 public class NotationForm {
@@ -19,18 +23,23 @@ public class NotationForm {
 	private TourDAO tourDAO;
 	private EpreuveDAO epreuveDAO;
 	private BalletDAO balletDAO;
+	private ExecutionFigureDAO executionFigureDAO;
+	private EquipeDAO equipeDAO;
+	private EquipeCompetitionDAO equipeCompetitionDAO;
 	private Map<String, String> erreurs = new HashMap<>();
 	
 	/**
 	 * Constructeur
-	 * @param competitionDAO
-	 * @param tourDAO
 	 */
-	public NotationForm(CompetitionDAO competitionDAO, TourDAO tourDAO, EpreuveDAO epreuveDAO, BalletDAO balletDAO) {
+	public NotationForm(CompetitionDAO competitionDAO, TourDAO tourDAO, EpreuveDAO epreuveDAO, BalletDAO balletDAO,
+			ExecutionFigureDAO executionFigureDAO, EquipeDAO equipeDAO, EquipeCompetitionDAO equipeCompetitionDAO) {
 		this.competitionDAO = competitionDAO;
 		this.tourDAO = tourDAO;
 		this.epreuveDAO = epreuveDAO;
 		this.balletDAO = balletDAO;
+		this.executionFigureDAO = executionFigureDAO;
+		this.equipeDAO = equipeDAO;
+		this.equipeCompetitionDAO = equipeCompetitionDAO;
 	}
 	
 	/**
@@ -86,7 +95,24 @@ public class NotationForm {
 			int val = Integer.parseInt(idEpreuve);
 			list = balletDAO.getBalletByIdEpreuve(val);
 		} catch(Exception e) {
-			erreurs.put("getEpreuveByIdTour", e.getMessage());
+			erreurs.put("getBalletByIdEpreuve", e.getMessage());
+		}
+		return list;
+	}
+	
+	public ArrayList<EquipeBean> getEquipeByIdCompetition(int idCompet, int idBallet) {
+		ArrayList<EquipeBean> list = null;
+		try {
+			// On récupere les équipe liées à la compétition
+			ArrayList<EquipeCompetitionBean> equipeCompet = equipeCompetitionDAO.getEquipeCompetionByIdCompetition(idCompet);
+			// On récupère la liste de nageuse de chaque équipes
+			
+				// Pour chaque nageuse on test son existence dans ExecutionFigure quand le ballet vaut idBallet
+			
+				// Si une nageuse est présente on ajoute pas l'équipe dans list (on considère qu'elle a déjà recu une note sur ce ballet)
+			
+		} catch (Exception e) {
+			erreurs.put("getEquipeByIdCompetition", e.getMessage());
 		}
 		return list;
 	}

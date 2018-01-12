@@ -22,6 +22,7 @@ import com.natation.dao.CompetitionDAO;
 import com.natation.dao.DAOFactory;
 import com.natation.dao.EpreuveDAO;
 import com.natation.dao.EquipeCompetitionDAO;
+import com.natation.dao.EquipeDAO;
 import com.natation.dao.ExecutionFigureDAO;
 import com.natation.dao.TourDAO;
 import com.natation.metiers.NotationForm;
@@ -41,8 +42,8 @@ public class CompetitionServlet extends HttpServlet {
 	private TourDAO tourDAO;
 	private EpreuveDAO epreuveDAO;
 	private BalletDAO balletDAO;
-	
 	private ExecutionFigureDAO executionFigureDAO;
+	private EquipeDAO equipeDAO;
 	private EquipeCompetitionDAO equipeCompetitionDAO;
 	
 	@Override
@@ -52,6 +53,7 @@ public class CompetitionServlet extends HttpServlet {
         this.epreuveDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEpreuveDAO();
         this.balletDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getBalletDAO();
         this.executionFigureDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getExecutionFigureDAO();
+        equipeDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEquipeDAO();
         this.equipeCompetitionDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEquipeCompetitionDAO();
     }
 
@@ -66,7 +68,7 @@ public class CompetitionServlet extends HttpServlet {
             /* Redirection vers la page publique */
             response.sendRedirect( request.getContextPath() + REDIRECT );
         } else {
-        	NotationForm form = new NotationForm(competitionDAO, tourDAO, epreuveDAO, balletDAO);
+        	NotationForm form = new NotationForm(competitionDAO, tourDAO, epreuveDAO, balletDAO, executionFigureDAO, equipeDAO, equipeCompetitionDAO);
         	
         	// On vérifie si on a une sélection dans une des listes
         	String selec = request.getParameter("selection");

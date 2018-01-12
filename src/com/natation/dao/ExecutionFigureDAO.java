@@ -20,7 +20,7 @@ public class ExecutionFigureDAO {
 	 * @return Vrai dans le cas ou la requête retourne un résultat, Faux dans le cas contraire
 	 * @throws SQLException
 	 */
-	public Boolean checkExecutionFigureExist(String idJuge, int idBallet) throws SQLException {
+	public Boolean checkExecutionFigureExist(String idJuge, int idBallet) throws SQLException { // TODO PROBLEME FAUT TESTER LE BALLET ET UNE NAGEUSE
 		Boolean res = false;
 		Connection co = this.daoFactory.getConnection();
 		try {
