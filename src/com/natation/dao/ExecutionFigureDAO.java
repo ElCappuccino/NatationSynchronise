@@ -20,14 +20,15 @@ public class ExecutionFigureDAO {
 	 * @return Vrai dans le cas ou la requête retourne un résultat, Faux dans le cas contraire
 	 * @throws SQLException
 	 */
-	public Boolean checkExecutionFigureExist(String idJuge, int idBallet) throws SQLException { // TODO PROBLEME FAUT TESTER LE BALLET ET UNE NAGEUSE
+	public Boolean checkExecutionFigureExist(String idJuge, int idBallet, int idNageuse) throws SQLException { // TODO PROBLEME FAUT TESTER LE BALLET, LE JUGE ET UNE NAGEUSE
 		Boolean res = false;
 		Connection co = this.daoFactory.getConnection();
 		try {
-			String sql = "select * from executionfigure where idBallet = ? and idUtilisateur = ?";
+			String sql = "select * from executionfigure where idBallet = ? and idUtilisateur = ? and idNageuse = ?";
 			PreparedStatement requete = co.prepareStatement(sql);
 			requete.setInt(1, idBallet);
 			requete.setString(2, idJuge);
+			requete.setInt(3, idNageuse);
 
 			ResultSet rs = requete.executeQuery();
 			if(rs.next()) {

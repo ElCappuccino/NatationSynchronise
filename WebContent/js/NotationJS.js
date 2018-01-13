@@ -3,11 +3,15 @@ var competitions = document.querySelector('#listeCompetitions');
 var tours = document.querySelector("#listeTours");
 var epreuves = document.querySelector("#listeEpreuves");
 var ballets = document.querySelector("#listeBallets");
+var equipes = document.querySelector("#listeEquipes");
+var titulaire = document.querySelector("#titulaire");
+var remplacant = document.querySelector("#remplacant");
 
 competitions.addEventListener('change', competitionChange);
 tours.addEventListener('change', tourChange);
 epreuves.addEventListener('change', epreuveChange);
 ballets.addEventListener('change', balletChange);
+equipes.addEventListener('change', equipeChange);
 
 // ---- AJAX
 
@@ -86,8 +90,22 @@ function readDataBallet(data) {
 	}
 }
 
-function readDataNageuse(data) {
+function readDataEquipe(data) {
+	var option = document.createElement("option");
+	option.value = "0";
+	option.text = "Choisir une équipe";
+	equipes.add(option);
+	
+	for(var key in data) {
+	   var option = document.createElement("option");
+	   option.value = key;
+	   option.text = data[key];
+	   equipes.add(option);
+	}
+}
 
+function readDataNageuse(data) {
+	
 }
 
 //---------
@@ -99,6 +117,7 @@ function competitionChange() {
 	clearTours();
 	clearEpreuves();
 	clearBallets();
+	clearEquipes();
     
     // On envoit la requete
     var value =  escape(competitions.options[competitions.selectedIndex].value);
@@ -112,6 +131,7 @@ function tourChange() {
 	// Clear options
 	clearEpreuves();
 	clearBallets();
+	clearEquipes();
     
     // On envoit la requete
     var value =  escape(tours.options[tours.selectedIndex].value);
@@ -124,6 +144,7 @@ function tourChange() {
 function epreuveChange() {
 	// Clear options
 	clearBallets();
+	clearEquipes();
 	
 	// On envoit la requete
 	var value =  escape(epreuves.options[epreuves.selectedIndex].value);
@@ -134,12 +155,24 @@ function epreuveChange() {
 }
 
 function balletChange() {
+	clearEquipes();
 	// On envoit la requete
 	var value =  escape(ballets.options[ballets.selectedIndex].value);
     if(value == "0")
     	return;
     var valueCompet = escape(competitions.options[competitions.selectedIndex].value);
     var url = "competition?selection=ballet&valeur=" + value + "&compvaleur=" + valueCompet;
+	request(readDataEquipe, url);
+}
+
+function equipeChange() {
+	// TODO Nettoyez les divs qui contiennent les tableaux de nageuses
+	
+	// On envoit la requete
+	var value =  escape(equipes.options[equipes.selectedIndex].value);
+    if(value == "0")
+    	return;
+    var url = "competition?selection=equipe&valeur=" + value;
 	request(readDataNageuse, url);
 }
 
@@ -167,6 +200,14 @@ function clearBallets() {
     for(i = ballets.options.length - 1 ; i >= 0 ; i--)
     {
     	ballets.remove(i);
+    }
+}
+
+function clearEquipes() {
+	var i;
+    for(i = equipes.options.length - 1 ; i >= 0 ; i--)
+    {
+    	equipes.remove(i);
     }
 }
 

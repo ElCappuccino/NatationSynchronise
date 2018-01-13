@@ -9,6 +9,7 @@ import com.natation.beans.CompetitionBean;
 import com.natation.beans.EpreuveBean;
 import com.natation.beans.EquipeBean;
 import com.natation.beans.EquipeCompetitionBean;
+import com.natation.beans.NageuseBean;
 import com.natation.beans.TourBean;
 import com.natation.dao.BalletDAO;
 import com.natation.dao.CompetitionDAO;
@@ -100,16 +101,28 @@ public class NotationForm {
 		return list;
 	}
 	
-	public ArrayList<EquipeBean> getEquipeByIdCompetition(int idCompet, int idBallet) {
-		ArrayList<EquipeBean> list = null;
+	public ArrayList<EquipeBean> getEquipeByIdCompetition(String idJuge, String idCompet, String idBallet) {
+		ArrayList<EquipeBean> list = new ArrayList<>();
 		try {
+			int valCompet = Integer.parseInt(idCompet);
+			int valBallet = Integer.parseInt(idBallet);
+			
 			// On récupere les équipe liées à la compétition
-			ArrayList<EquipeCompetitionBean> equipeCompet = equipeCompetitionDAO.getEquipeCompetionByIdCompetition(idCompet);
-			// On récupère la liste de nageuse de chaque équipes
+			ArrayList<EquipeCompetitionBean> equipeCompet = equipeCompetitionDAO.getEquipeCompetionByIdCompetition(valCompet);
 			
-				// Pour chaque nageuse on test son existence dans ExecutionFigure quand le ballet vaut idBallet
-			
+			for(EquipeCompetitionBean ec : equipeCompet) { // On récupère la liste de nageuse de chaque équipes
+				Boolean verif = false;
+				ArrayList<NageuseBean> nageuses = equipeDAO.getNageusesByIdEquipe(ec.getEquipe().getId());
+				for(NageuseBean n : nageuses) { // Pour chaque nageuse on test son existence dans ExecutionFigure quand le ballet vaut idBallet et le juge idJuge
+					if(executionFigureDAO.checkExecutionFigureExist(idJuge, valBallet, n.getId())) {
+						verif = true;
+						break;
+					}
+				}
 				// Si une nageuse est présente on ajoute pas l'équipe dans list (on considère qu'elle a déjà recu une note sur ce ballet)
+				if(!verif)
+					list.add(ec.getEquipe());
+			}	
 			
 		} catch (Exception e) {
 			erreurs.put("getEquipeByIdCompetition", e.getMessage());

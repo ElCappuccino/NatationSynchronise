@@ -70,7 +70,22 @@
 						</select>
 					</div>
 				</div>
+				
+				<div class="form-group row">
+					<div class="col-2">
+						<label for="listeEquipes" class="col-form-label">Equipes
+						</label>
+					</div>
+					<div class="col-10">
+						<select class="form-control" id="listeEquipes">
+							
+						</select>
+					</div>
+				</div>
+				<div id="titulaire"></div>
+				<div id="remplacant"></div>
 			</form>
+			
 		</div>
 	</div>
 

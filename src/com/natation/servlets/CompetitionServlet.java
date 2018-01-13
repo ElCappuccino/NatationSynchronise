@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.natation.beans.BalletBean;
 import com.natation.beans.CompetitionBean;
 import com.natation.beans.EpreuveBean;
+import com.natation.beans.EquipeBean;
 import com.natation.beans.TourBean;
 import com.natation.beans.UtilisateurBean;
 import com.natation.dao.BalletDAO;
@@ -59,7 +60,6 @@ public class CompetitionServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
 		/*
          * Si l'objet utilisateur n'existe pas dans la session en cours, alors
          * l'utilisateur n'est pas connecté.
@@ -111,10 +111,21 @@ public class CompetitionServlet extends HttpServlet {
 					return;
             	} else if(selec.equals("ballet")) {
             		// On récupère les équipes liées à la compétition sélectionné
-            		// On enleve toutes celles possédant déjà leurs notes sur ce ballet pour ce juge
-            		
+            		// On enleve toutes celles possédant déjà leurs notes sur ce ballet pour ce juge		
             		String valueCompet = request.getParameter("compvaleur");
-            		
+            		ArrayList<EquipeBean> listEquipes = form.getEquipeByIdCompetition(((UtilisateurBean)session.getAttribute(ATTR_SESSION_USERBEAN)).getId(), valueCompet, value);
+            		Map<Integer, String> mapEquipe = new HashMap<>();
+            		for(EquipeBean e : listEquipes) {
+            			mapEquipe.put(e.getId(), e.getLibelle());
+            		}
+            		final String json = gson.toJson(mapEquipe);
+					response.getWriter().write(json);
+					return;
+            	} else if(selec.equals("equipe")) {
+            		System.out.println(value);
+            		// On récupère la liste des nageuses
+            		// On récupère les différentes figures possible
+            		return;
             	}
             	
         	} else {
