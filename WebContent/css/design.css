@@ -14,6 +14,7 @@ body {
 	background-color : #F2F2F2;
 	background-image : url("../img/background.jpg");
 	background-position : center;
+	background-attachment: fixed;
 }
 
 footer {
@@ -58,4 +59,8 @@ h1 {
 
 .fondNoir {
 	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.margin-bottom-30 {
+	margin-bottom : 30px;
 }
