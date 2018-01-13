@@ -239,22 +239,22 @@ insert into NageuseClub(idClub, idNageuse, dateInscriptionNageuseClub, dateDepar
 /*==============================================================*/
 /* Table: NAGEUSEEQUIPE                                         */
 /*==============================================================*/
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(1, 1, '2010-03-16 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(1, 2, '2012-11-16 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(1, 3, '2009-10-16 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(1, 4, '2013-03-05 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(2, 5, '2009-03-05 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(2, 6, '2010-03-02 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(2, 7, '2011-01-26 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(2, 8, '2008-06-16 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(3, 9, '2009-10-06 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(3, 10, '2011-05-21 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(4, 11, '2015-12-05 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(4, 12, '2015-09-10 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(5, 15, '2013-02-07 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(5, 16, '2014-08-14 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(6, 13, '2014-07-17 00:00:00', null);
-insert into NageuseEquipe(idEquipe, idNageuse, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(7, 14, '2013-08-19 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(1, 1, true, '2010-03-16 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(1, 2, true, '2012-11-16 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(1, 3, true, '2009-10-16 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(1, 4, false, '2013-03-05 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(2, 5, true, '2009-03-05 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(2, 6, true, '2010-03-02 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(2, 7, true, '2011-01-26 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(2, 8, true, '2008-06-16 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(3, 9, true, '2009-10-06 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(3, 10, true, '2011-05-21 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(4, 11, true, '2015-12-05 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(4, 12, true, '2015-09-10 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(5, 15, true, '2013-02-07 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(5, 16, true, '2014-08-14 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(6, 13, true, '2014-07-17 00:00:00', null);
+insert into NageuseEquipe(idEquipe, idNageuse, isTitulaire, dateInscriptionNageuseEquipe, dateDepartNageuseEquipe) values(7, 14, true, '2013-08-19 00:00:00', null);
 
 /*==============================================================*/
 /* Table: EquipeCompetition                                         */
