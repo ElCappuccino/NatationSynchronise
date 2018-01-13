@@ -46,7 +46,7 @@ public class EquipeDAO {
 		ArrayList<NageuseBean> listNageuses = new ArrayList<>();
 		Connection co = this.daoFactory.getConnection();
 		try {
-			String sql = "select * from Nageuse N "
+			String sql = "select N.idNageuse, N.nomNageuse, N.prenomNageuse, N.dateNaissanceNageuse from Nageuse N "
 					+ "inner join nageuseequipe NE on N.idNageuse = NE.idNageuse "
 					+ "where NE.idequipe = ?";
 			PreparedStatement requete = co.prepareStatement(sql);

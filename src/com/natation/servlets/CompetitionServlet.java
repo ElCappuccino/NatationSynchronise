@@ -2,21 +2,12 @@ package com.natation.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.natation.beans.BalletBean;
 import com.natation.beans.CompetitionBean;
-import com.natation.beans.EpreuveBean;
-import com.natation.beans.EquipeBean;
-import com.natation.beans.TourBean;
 import com.natation.beans.UtilisateurBean;
 import com.natation.dao.BalletDAO;
 import com.natation.dao.CompetitionDAO;
@@ -26,6 +17,7 @@ import com.natation.dao.EquipeCompetitionDAO;
 import com.natation.dao.EquipeDAO;
 import com.natation.dao.ExecutionFigureDAO;
 import com.natation.dao.TourDAO;
+import com.natation.dao.TypeFigureDAO;
 import com.natation.metiers.NotationForm;
 
 /**
@@ -46,6 +38,7 @@ public class CompetitionServlet extends HttpServlet {
 	private ExecutionFigureDAO executionFigureDAO;
 	private EquipeDAO equipeDAO;
 	private EquipeCompetitionDAO equipeCompetitionDAO;
+	private TypeFigureDAO typeFigureDAO;
 	
 	@Override
 	public void init() throws ServletException {
@@ -54,8 +47,9 @@ public class CompetitionServlet extends HttpServlet {
         this.epreuveDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEpreuveDAO();
         this.balletDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getBalletDAO();
         this.executionFigureDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getExecutionFigureDAO();
-        equipeDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEquipeDAO();
+        this.equipeDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEquipeDAO();
         this.equipeCompetitionDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEquipeCompetitionDAO();
+        this.typeFigureDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getTypeFigureDAO();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,66 +62,13 @@ public class CompetitionServlet extends HttpServlet {
             /* Redirection vers la page publique */
             response.sendRedirect( request.getContextPath() + REDIRECT );
         } else {
-        	NotationForm form = new NotationForm(competitionDAO, tourDAO, epreuveDAO, balletDAO, executionFigureDAO, equipeDAO, equipeCompetitionDAO);
+        	NotationForm form = new NotationForm(competitionDAO, tourDAO, epreuveDAO, balletDAO, executionFigureDAO, equipeDAO, equipeCompetitionDAO, typeFigureDAO);
         	
         	// On vérifie si on a une sélection dans une des listes
         	String selec = request.getParameter("selection");
         	if(selec != null) {
-        		String value = request.getParameter("valeur");
-        		final GsonBuilder builder = new GsonBuilder();
-        		final Gson gson = builder.create();
-        		
-        		// Selon la liste
-            	if(selec.equals("competition")) {
-            		// On récupère les tours selon la valeur récupérée
-            		ArrayList<TourBean> listTours = form.getTourByIdCompetition(value);
-            		
-            		Map<Integer, String> mapTours = new HashMap<>();
-            		for(TourBean t : listTours) {
-            			mapTours.put(t.getId(), t.getType().getLibelle());
-            		}
-            		final String json = gson.toJson(mapTours);
-					response.getWriter().write(json);
-					return;
-            	} else if(selec.equals("tour")) {
-            		// Récupération des epreuves liées à ce tour
-            		ArrayList<EpreuveBean> listEpreuves = form.getEpreuveByIdTour(value);
-            		Map<Integer, String> mapEpreuves = new HashMap<>();
-            		for(EpreuveBean e : listEpreuves) {
-            			mapEpreuves.put(e.getId(), e.getTypeEpreuve().getLibelle());
-            		}
-            		final String json = gson.toJson(mapEpreuves);
-					response.getWriter().write(json);
-					return;
-            	} else if(selec.equals("epreuve")) {
-            		// Récupération des ballets liés à cette épreuve
-            		ArrayList<BalletBean> listBallets = form.getBalletByIdEpreuve(value);
-            		Map<Integer, String> mapBallets = new HashMap<>();
-            		for(BalletBean b : listBallets) {
-            			mapBallets.put(b.getId(), b.getTypeBallet().getLibelle());
-            		}
-            		final String json = gson.toJson(mapBallets);
-					response.getWriter().write(json);
-					return;
-            	} else if(selec.equals("ballet")) {
-            		// On récupère les équipes liées à la compétition sélectionné
-            		// On enleve toutes celles possédant déjà leurs notes sur ce ballet pour ce juge		
-            		String valueCompet = request.getParameter("compvaleur");
-            		ArrayList<EquipeBean> listEquipes = form.getEquipeByIdCompetition(((UtilisateurBean)session.getAttribute(ATTR_SESSION_USERBEAN)).getId(), valueCompet, value);
-            		Map<Integer, String> mapEquipe = new HashMap<>();
-            		for(EquipeBean e : listEquipes) {
-            			mapEquipe.put(e.getId(), e.getLibelle());
-            		}
-            		final String json = gson.toJson(mapEquipe);
-					response.getWriter().write(json);
-					return;
-            	} else if(selec.equals("equipe")) {
-            		System.out.println(value);
-            		// On récupère la liste des nageuses
-            		// On récupère les différentes figures possible
-            		return;
-            	}
-            	
+        		form.sendFields(request, response, session, selec);
+        		return;
         	} else {
         		// On récupère toutes les compétitions pour la liste
             	ArrayList<CompetitionBean>listCompet = form.getCompetitionsByUser(((UtilisateurBean)session.getAttribute("userBean")).getId());

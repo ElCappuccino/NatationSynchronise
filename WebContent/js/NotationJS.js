@@ -105,7 +105,11 @@ function readDataEquipe(data) {
 }
 
 function readDataNageuse(data) {
-	
+	console.log(data);
+	for(var key in data) {
+		for(var caca in data[key]) {
+		}
+	}
 }
 
 //---------
