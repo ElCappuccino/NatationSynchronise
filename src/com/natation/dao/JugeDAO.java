@@ -9,11 +9,9 @@ import com.natation.beans.JugeBean;
 
 public class JugeDAO {
 	private DAOFactory daoFactory;
-	private TypeJugeDAO daoTypeJuge;
 	
 	public JugeDAO(DAOFactory factory) {
 		this.daoFactory = factory;
-		this.daoTypeJuge = factory.getTypeJugeDAO();
 	}
 	
 	public JugeBean getJugeById(String id) throws SQLException {
@@ -27,7 +25,7 @@ public class JugeDAO {
 			ResultSet rs = requete.executeQuery();
 			if(rs.next()) {
 				juge = new JugeBean(rs.getString(1), null);
-				juge.setTypeJuge(daoTypeJuge.getTypeJugeById(rs.getInt(2)));
+				juge.setTypeJuge(daoFactory.getTypeJugeDAO().getTypeJugeById(rs.getInt(2)));
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();

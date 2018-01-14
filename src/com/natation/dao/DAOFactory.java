@@ -174,4 +174,25 @@ public class DAOFactory {
 	public TypeJugeDAO getTypeJugeDAO() {
 		return new TypeJugeDAO(this);
 	}
+	
+	/**
+	 * @return DAO lié à un club
+	 */
+	public ClubDAO getClubDAO() {
+		return new ClubDAO(this);
+	}
+	
+	/**
+	 * @return DAO lié à une competition
+	 */
+	public CompetitionDAO getCompetitionDAO() {
+		return new CompetitionDAO(this);
+	}
+	
+	/**
+	 * @return DAO lié à un dirigeant
+	 */
+	public DirigeantDAO getDirigeantDAO() {
+		return new DirigeantDAO(this);
+	}
 }

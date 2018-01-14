@@ -4,19 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import com.natation.beans.ClubBean;
 import com.natation.beans.DirigeantBean;
 import com.natation.beans.LieuBean;
 
 public class DirigeantDAO {
 	private DAOFactory daoFactory;
-	private LieuDAO lieuDAO;
 	
 	public DirigeantDAO(DAOFactory factory) {
 		this.daoFactory = factory;
-		this.lieuDAO = new LieuDAO(factory);
 	}
 	
 	public DirigeantBean getDirigeantById(int idDirigeant) throws SQLException {
@@ -30,7 +26,7 @@ public class DirigeantDAO {
 
 			ResultSet rs = requete.executeQuery();
 			if(rs.next()) {
-				LieuBean lieu = lieuDAO.getLieuById(rs.getInt(2));
+				LieuBean lieu = daoFactory.getLieuDAO().getLieuById(rs.getInt(2));
 				dirigeant = new DirigeantBean(
 						rs.getInt(1),
 						lieu,

@@ -11,11 +11,9 @@ import com.natation.beans.DirigeantBean;
 
 public class ClubDAO {
 	private DAOFactory daoFactory;
-	private DirigeantDAO dirigeantDAO;
 	
 	public ClubDAO(DAOFactory factory) {
 		this.daoFactory = factory;
-		this.dirigeantDAO = new DirigeantDAO(factory);
 	}
 	
 	public ClubBean getClubById(int idClub) throws SQLException {
@@ -29,7 +27,7 @@ public class ClubDAO {
 
 			ResultSet rs = requete.executeQuery();
 			if(rs.next()) {
-				DirigeantBean dirigeant = dirigeantDAO.getDirigeantById(rs.getInt(2));
+				DirigeantBean dirigeant = daoFactory.getDirigeantDAO().getDirigeantById(rs.getInt(2));
 				club = new ClubBean(
 						rs.getInt(1),
 						dirigeant,
@@ -55,7 +53,7 @@ public class ClubDAO {
 			PreparedStatement requete = co.prepareStatement(sql);
 			ResultSet rs = requete.executeQuery();
 			while(rs.next()) {
-				DirigeantBean dirigeant = dirigeantDAO.getDirigeantById(rs.getInt(2));
+				DirigeantBean dirigeant = daoFactory.getDirigeantDAO().getDirigeantById(rs.getInt(2));
 				ClubBean club = new ClubBean(
 						rs.getInt(1),
 						dirigeant,

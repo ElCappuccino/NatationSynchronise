@@ -11,11 +11,9 @@ import com.natation.beans.TypeTourBean;
 
 public class TourDAO {
 	private DAOFactory daoFactory;
-	private TypeTourDAO daoTypeTour;
 	
 	public TourDAO(DAOFactory factory) {
 		this.daoFactory = factory;
-		daoTypeTour = factory.getTypeTourDAO();
 	}
 	
 	public ArrayList<TourBean> getTourByIdCompetition(int idCompetition) throws SQLException {
@@ -34,7 +32,7 @@ public class TourDAO {
 						null,
 						rs.getInt(2)
 						);
-				TypeTourBean typeTour = daoTypeTour.getTypeTourById(rs.getInt(3));
+				TypeTourBean typeTour = daoFactory.getTypeTourDAO().getTypeTourById(rs.getInt(3));
 				tour.setType(typeTour);
 				listTour.add(tour);
 			}

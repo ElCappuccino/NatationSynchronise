@@ -10,11 +10,9 @@ import com.natation.beans.EpreuveBean;
 
 public class EpreuveDAO {
 	private DAOFactory daoFactory;
-	private TypeEpreuveDAO daoTypeEpreuve;
 	
 	public EpreuveDAO(DAOFactory factory) {
 		this.daoFactory = factory;
-		this.daoTypeEpreuve = factory.getTypeEpreuveDAO();
 	}
 	
 	public ArrayList<EpreuveBean> getEpreuveByIdTour(int idTypeTour) throws SQLException {
@@ -34,7 +32,7 @@ public class EpreuveDAO {
 						rs.getInt(2),
 						null
 						);
-				epreuve.setTypeEpreuve(daoTypeEpreuve.getTypeEpreuveById(rs.getInt(3)));
+				epreuve.setTypeEpreuve(daoFactory.getTypeEpreuveDAO().getTypeEpreuveById(rs.getInt(3)));
 				listeEpreuves.add(epreuve);
 			}
 		} catch(SQLException e) {

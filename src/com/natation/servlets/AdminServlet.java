@@ -3,13 +3,13 @@ package com.natation.servlets;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.natation.beans.UtilisateurBean;
+import com.natation.dao.ClubDAO;
 import com.natation.dao.CompetitionDAO;
 import com.natation.dao.DAOFactory;
 import com.natation.dao.EquipeDAO;
@@ -28,14 +28,17 @@ public class AdminServlet extends HttpServlet {
 	public static final String CONF_DAOFACTORY = "daofactory";
 
 	private NageuseDAO nageuseDAO;
-	//private ClubDAO clubDAO;
+	private ClubDAO clubDAO;
 	private EquipeDAO equipeDAO;
 	private CompetitionDAO competitionDAO;
-	// TODO : quand clubDAO ok, continuer taitement listes
+	// TODO : quand clubDAO ok, continuer traitement listes
 	
 	@Override
 	public void init() throws ServletException {
         this.nageuseDAO = ( (DAOFactory) getServletContext().getAttribute( CONF_DAOFACTORY ) ).getNageuseDAO();
+        this.clubDAO = ( (DAOFactory) getServletContext().getAttribute( CONF_DAOFACTORY ) ).getClubDAO();
+        this.equipeDAO = ( (DAOFactory) getServletContext().getAttribute( CONF_DAOFACTORY ) ).getEquipeDAO();
+        this.competitionDAO = ( (DAOFactory) getServletContext().getAttribute( CONF_DAOFACTORY ) ).getCompetitionDAO();
     }
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

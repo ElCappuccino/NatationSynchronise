@@ -10,11 +10,9 @@ import com.natation.beans.BalletBean;
 
 public class BalletDAO {
 	private DAOFactory daoFactory;
-	private TypeBalletDAO daoTypeBallet;
 	
 	public BalletDAO(DAOFactory factory) {
 		this.daoFactory = factory;
-		this.daoTypeBallet = factory.getTypeBalletDAO();
 	}
 	
 	public ArrayList<BalletBean> getBalletByIdEpreuve(int idEpreuve) throws SQLException {
@@ -33,7 +31,7 @@ public class BalletDAO {
 						rs.getInt(3),
 						rs.getDouble(4)
 						);
-				ballet.setTypeBallet(daoTypeBallet.getTypeBalletById(rs.getInt(2)));
+				ballet.setTypeBallet(daoFactory.getTypeBalletDAO().getTypeBalletById(rs.getInt(2)));
 				
 				listeBallet.add(ballet);
 			}

@@ -10,11 +10,9 @@ import com.natation.beans.EquipeCompetitionBean;
 
 public class EquipeCompetitionDAO {
 	private DAOFactory daoFactory;
-	private EquipeDAO daoEquipe;
 	
 	public EquipeCompetitionDAO(DAOFactory factory) {
 		this.daoFactory = factory;
-		this.daoEquipe = factory.getEquipeDAO();
 	}
 	
 	public ArrayList<EquipeCompetitionBean> getEquipeCompetionByIdCompetition(int idCompetition) throws SQLException {
@@ -31,7 +29,7 @@ public class EquipeCompetitionDAO {
 				EquipeCompetitionBean equipeCompet = new EquipeCompetitionBean(
 						null,
 						rs.getInt(2));
-				equipeCompet.setEquipe(daoEquipe.getEquipeById(rs.getInt(1)));
+				equipeCompet.setEquipe(daoFactory.getEquipeDAO().getEquipeById(rs.getInt(1)));
 				listEquipeCompetition.add(equipeCompet);
 			}
 		} catch(SQLException e) {

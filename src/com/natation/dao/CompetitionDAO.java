@@ -12,13 +12,9 @@ import com.natation.beans.LieuBean;
 
 public class CompetitionDAO {
 	private DAOFactory daoFactory;
-	private LieuDAO lieuDAO;
-	private CategorieDAO categorieDAO;
 	
 	public CompetitionDAO(DAOFactory factory) {
 		this.daoFactory = factory;
-		this.lieuDAO = factory.getLieuDAO();
-		this.categorieDAO = factory.getCategorieDAO();
 	}
 	
 	/**
@@ -52,10 +48,10 @@ public class CompetitionDAO {
 						null
 						);
 				// On récupère le lieu lié à la compétition
-				LieuBean lieu = lieuDAO.getLieuById(rs.getInt(2));
+				LieuBean lieu = daoFactory.getLieuDAO().getLieuById(rs.getInt(2));
 				comp.setLieu(lieu);
 				// On récupère la catégorie lié à la compétition
-				CategorieBean categorie = categorieDAO.getCategorieById(rs.getInt(3));
+				CategorieBean categorie = daoFactory.getCategorieDAO().getCategorieById(rs.getInt(3));
 				comp.setCategorie(categorie);
 				listCompet.add(comp);
 			}
