@@ -24,24 +24,18 @@ import com.natation.beans.TypeFigureBean;
 import com.natation.beans.UtilisateurBean;
 import com.natation.dao.BalletDAO;
 import com.natation.dao.CompetitionDAO;
+import com.natation.dao.DAOFactory;
 import com.natation.dao.EpreuveDAO;
 import com.natation.dao.EquipeCompetitionDAO;
 import com.natation.dao.EquipeDAO;
 import com.natation.dao.ExecutionFigureDAO;
 import com.natation.dao.JugeDAO;
+import com.natation.dao.NageuseDAO;
 import com.natation.dao.TourDAO;
 import com.natation.dao.TypeFigureDAO;
 
 public class NotationForm {
-	private CompetitionDAO competitionDAO;
-	private TourDAO tourDAO;
-	private EpreuveDAO epreuveDAO;
-	private BalletDAO balletDAO;
-	private ExecutionFigureDAO executionFigureDAO;
-	private EquipeDAO equipeDAO;
-	private EquipeCompetitionDAO equipeCompetitionDAO;
-	private TypeFigureDAO typeFigureDAO;
-	private JugeDAO jugeDAO;
+	private DAOFactory daoFactory;
 	private Map<String, String> erreurs = new HashMap<>();
 	
 	public static final String ATTR_SESSION_USERBEAN = "userBean";
@@ -50,18 +44,8 @@ public class NotationForm {
 	/**
 	 * Constructeur
 	 */
-	public NotationForm(CompetitionDAO competitionDAO, TourDAO tourDAO, EpreuveDAO epreuveDAO, BalletDAO balletDAO,
-			ExecutionFigureDAO executionFigureDAO, EquipeDAO equipeDAO, EquipeCompetitionDAO equipeCompetitionDAO,
-			TypeFigureDAO typeFigureDAO, JugeDAO jugeDAO) {
-		this.competitionDAO = competitionDAO;
-		this.tourDAO = tourDAO;
-		this.epreuveDAO = epreuveDAO;
-		this.balletDAO = balletDAO;
-		this.executionFigureDAO = executionFigureDAO;
-		this.equipeDAO = equipeDAO;
-		this.equipeCompetitionDAO = equipeCompetitionDAO;
-		this.typeFigureDAO = typeFigureDAO;
-		this.jugeDAO = jugeDAO;
+	public NotationForm(DAOFactory f) {
+		this.daoFactory = f;
 	}
 	
 	/**
@@ -72,7 +56,7 @@ public class NotationForm {
 	public ArrayList<CompetitionBean> getCompetitionsByUser(String idUser) {
 		ArrayList<CompetitionBean> list = null;
 		try {
-			list = competitionDAO.getCompetitionByUtilisateur(idUser);
+			list = daoFactory.getCompetitionDAO().getCompetitionByUtilisateur(idUser);
 		} catch (SQLException e) {
 			erreurs.put("getCompetitionsByUser", e.getMessage());
 		}
@@ -88,7 +72,7 @@ public class NotationForm {
 		ArrayList<TourBean> list = null;
 		try {
 			int val = Integer.parseInt(idCompetition);
-			list = tourDAO.getTourByIdCompetition(val);
+			list = daoFactory.getTourDAO().getTourByIdCompetition(val);
 		} catch(Exception e) {
 			erreurs.put("getTourByIdCompetition", e.getMessage());
 		}
@@ -104,7 +88,7 @@ public class NotationForm {
 		ArrayList<EpreuveBean> list = null;
 		try {
 			int val = Integer.parseInt(idTour);
-			list = epreuveDAO.getEpreuveByIdTour(val);
+			list = daoFactory.getEpreuveDAO().getEpreuveByIdTour(val);
 		} catch(Exception e) {
 			erreurs.put("getEpreuveByIdTour", e.getMessage());
 		}
@@ -115,7 +99,7 @@ public class NotationForm {
 		ArrayList<BalletBean> list = null;
 		try {
 			int val = Integer.parseInt(idEpreuve);
-			list = balletDAO.getBalletByIdEpreuve(val);
+			list = daoFactory.getBalletDAO().getBalletByIdEpreuve(val);
 		} catch(Exception e) {
 			erreurs.put("getBalletByIdEpreuve", e.getMessage());
 		}
@@ -129,13 +113,13 @@ public class NotationForm {
 			int valBallet = Integer.parseInt(idBallet);
 			
 			// On récupere les équipe liées à la compétition
-			ArrayList<EquipeCompetitionBean> equipeCompet = equipeCompetitionDAO.getEquipeCompetionByIdCompetition(valCompet);
+			ArrayList<EquipeCompetitionBean> equipeCompet = daoFactory.getEquipeCompetitionDAO().getEquipeCompetionByIdCompetition(valCompet);
 			
 			for(EquipeCompetitionBean ec : equipeCompet) { // On récupère la liste de nageuse de chaque équipes
 				Boolean verif = false;
-				ArrayList<NageuseBean> nageuses = equipeDAO.getNageusesByIdEquipe(ec.getEquipe().getId());
+				ArrayList<NageuseBean> nageuses = daoFactory.getNageuseDAO().getNageusesByIdEquipe(ec.getEquipe().getId());
 				for(NageuseBean n : nageuses) { // Pour chaque nageuse on test son existence dans ExecutionFigure quand le ballet vaut idBallet et le juge idJuge
-					if(executionFigureDAO.checkExecutionFigureExist(idJuge, valBallet, n.getId())) {
+					if(daoFactory.getExecutionFigureDAO().checkExecutionFigureExist(idJuge, valBallet, n.getId())) {
 						verif = true;
 						break;
 					}
@@ -155,7 +139,7 @@ public class NotationForm {
 		ArrayList<NageuseBean> list = new ArrayList<>();
 		try {
 			int val = Integer.parseInt(idEquipe);
-			list = equipeDAO.getNageusesByIdEquipe(val);
+			list = daoFactory.getNageuseDAO().getNageusesByIdEquipe(val);
 			
 		} catch(Exception e) {
 			erreurs.put("getNageuseByIdEquipe", e.getMessage());
@@ -166,7 +150,7 @@ public class NotationForm {
 	public JugeBean getJugeById(String idUtilisateur) {
 		JugeBean juge = null;
 		try {
-			juge = jugeDAO.getJugeById(idUtilisateur);
+			juge = daoFactory.getJugeDAO().getJugeById(idUtilisateur);
 		} catch(Exception e) {
 			erreurs.put("getJugeById", e.getMessage());
 		}
@@ -176,7 +160,7 @@ public class NotationForm {
 	public ArrayList<TypeFigureBean> getAllTypeFigure() {
 		ArrayList<TypeFigureBean> list = new ArrayList<>();
 		try {
-			list = typeFigureDAO.getAllTypeFigure();
+			list = daoFactory.getTypeFigureDAO().getAllTypeFigure();
 		} catch(Exception e) {
 			erreurs.put("getAllTypeFigure", e.getMessage());
 		}

@@ -63,13 +63,6 @@ public class DAOFactory {
 	}
 	
 	/**
-	 * @return DAO lié à compétition
-	 */
-	public CompetitionDAO getCompetitionDao() {
-		return new CompetitionDAO(this);
-	}
-	
-	/**
 	 * @return DAO lié à un lieu
 	 */
 	public LieuDAO getLieuDAO() {

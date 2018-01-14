@@ -42,32 +42,28 @@ public class EquipeDAO {
 		return equipe;
 	}
 	
-	public ArrayList<NageuseBean> getNageusesByIdEquipe(int idEquipe) throws SQLException {
-		ArrayList<NageuseBean> listNageuses = new ArrayList<>();
+	public EquipeBean getEquipeByClubId(int idClub) throws SQLException {
+		EquipeBean equipe = null;
 		Connection co = this.daoFactory.getConnection();
+
 		try {
-			String sql = "select N.idNageuse, N.nomNageuse, N.prenomNageuse, N.dateNaissanceNageuse, NE.isTitulaire from Nageuse N "
-					+ "inner join nageuseequipe NE on N.idNageuse = NE.idNageuse "
-					+ "where NE.idequipe = ?";
+			String sql = "select * from equipe where idClub = ?";
 			PreparedStatement requete = co.prepareStatement(sql);
-			requete.setInt(1, idEquipe);
+			requete.setInt(1, idClub);
 
 			ResultSet rs = requete.executeQuery();
-			while(rs.next()) {
-				NageuseBean nageuse = new NageuseBean(
+			if(rs.next()) {
+				equipe = new EquipeBean(
 						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						LocalDate.parse(rs.getString(4)));
-				nageuse.setIsTitulaire(rs.getBoolean(5));
-				listNageuses.add(nageuse);
+						rs.getInt(2),
+						rs.getString(3));
 			}
-		}  catch(SQLException e) {
+		} catch(SQLException e) {
 			e.printStackTrace();
 			throw new SQLException("Erreur technique. Veuillez contacter l'administrateur système.");
 		} finally {
 			co.close();
 		}
-		return listNageuses;
+		return equipe;
 	}
 }

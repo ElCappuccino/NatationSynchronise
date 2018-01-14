@@ -2,7 +2,6 @@ package com.natation.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.natation.beans.CompetitionBean;
 import com.natation.beans.UtilisateurBean;
-import com.natation.dao.BalletDAO;
-import com.natation.dao.CompetitionDAO;
 import com.natation.dao.DAOFactory;
-import com.natation.dao.EpreuveDAO;
-import com.natation.dao.EquipeCompetitionDAO;
-import com.natation.dao.EquipeDAO;
-import com.natation.dao.ExecutionFigureDAO;
-import com.natation.dao.JugeDAO;
-import com.natation.dao.TourDAO;
-import com.natation.dao.TypeFigureDAO;
 import com.natation.metiers.NotationForm;
 
 /**
@@ -34,27 +24,11 @@ public class CompetitionServlet extends HttpServlet {
 	public static final String CONF_DAOFACTORY = "daofactory";
 	public static final String RESP_ERRORS = "erreurs";
 	
-	private CompetitionDAO competitionDAO;
-	private TourDAO tourDAO;
-	private EpreuveDAO epreuveDAO;
-	private BalletDAO balletDAO;
-	private ExecutionFigureDAO executionFigureDAO;
-	private EquipeDAO equipeDAO;
-	private EquipeCompetitionDAO equipeCompetitionDAO;
-	private TypeFigureDAO typeFigureDAO;
-	private JugeDAO jugeDAO;
+	private DAOFactory daoFactory;
 	
 	@Override
 	public void init() throws ServletException {
-        this.competitionDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getCompetitionDao();
-        this.tourDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getTourDAO();
-        this.epreuveDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEpreuveDAO();
-        this.balletDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getBalletDAO();
-        this.executionFigureDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getExecutionFigureDAO();
-        this.equipeDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEquipeDAO();
-        this.equipeCompetitionDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEquipeCompetitionDAO();
-        this.typeFigureDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getTypeFigureDAO();
-        this.jugeDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getJugeDAO();
+		this.daoFactory = (DAOFactory) getServletContext().getAttribute(CONF_DAOFACTORY);
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +41,7 @@ public class CompetitionServlet extends HttpServlet {
             /* Redirection vers la page publique */
             response.sendRedirect( request.getContextPath() + REDIRECT );
         } else {
-        	NotationForm form = new NotationForm(competitionDAO, tourDAO, epreuveDAO, balletDAO, executionFigureDAO, equipeDAO, equipeCompetitionDAO, typeFigureDAO, jugeDAO);
+        	NotationForm form = new NotationForm(daoFactory);
         	
         	// On vérifie si on a une sélection dans une des listes
         	String selec = request.getParameter("selection");
