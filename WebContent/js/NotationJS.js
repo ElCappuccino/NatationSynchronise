@@ -114,10 +114,10 @@ function readDataNageuse(data) {
 	for(var keyNT in data["nageusesT"]) {
 		htmlTitulaire += "<tr>";
 		
-		htmlTitulaire += '<td><input type="checkbox" name="' + keyNT + '"></td>';
+		htmlTitulaire += '<td><input type="checkbox" name="nageuse[]" idNageuse="' + keyNT + '"></td>';
 		htmlTitulaire += "<td>" + data["nageusesT"][keyNT] + "</td>";
 		
-		htmlTitulaire += '<td><select class="form-control" id="listeFigure_' + keyNT + '">';
+		htmlTitulaire += '<td><select class="form-control" name="listeFigure[]' + keyNT + '">';
 		for(var keyF in data["figures"]) {
 			htmlTitulaire += '<option value="' + keyF + '">' + data["figures"][keyF] + '</option>';
 		}
