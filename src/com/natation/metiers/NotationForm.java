@@ -17,6 +17,7 @@ import com.natation.beans.CompetitionBean;
 import com.natation.beans.EpreuveBean;
 import com.natation.beans.EquipeBean;
 import com.natation.beans.EquipeCompetitionBean;
+import com.natation.beans.JugeBean;
 import com.natation.beans.NageuseBean;
 import com.natation.beans.TourBean;
 import com.natation.beans.TypeFigureBean;
@@ -27,6 +28,7 @@ import com.natation.dao.EpreuveDAO;
 import com.natation.dao.EquipeCompetitionDAO;
 import com.natation.dao.EquipeDAO;
 import com.natation.dao.ExecutionFigureDAO;
+import com.natation.dao.JugeDAO;
 import com.natation.dao.TourDAO;
 import com.natation.dao.TypeFigureDAO;
 
@@ -39,6 +41,7 @@ public class NotationForm {
 	private EquipeDAO equipeDAO;
 	private EquipeCompetitionDAO equipeCompetitionDAO;
 	private TypeFigureDAO typeFigureDAO;
+	private JugeDAO jugeDAO;
 	private Map<String, String> erreurs = new HashMap<>();
 	
 	public static final String ATTR_SESSION_USERBEAN = "userBean";
@@ -48,7 +51,8 @@ public class NotationForm {
 	 * Constructeur
 	 */
 	public NotationForm(CompetitionDAO competitionDAO, TourDAO tourDAO, EpreuveDAO epreuveDAO, BalletDAO balletDAO,
-			ExecutionFigureDAO executionFigureDAO, EquipeDAO equipeDAO, EquipeCompetitionDAO equipeCompetitionDAO, TypeFigureDAO typeFigureDAO) {
+			ExecutionFigureDAO executionFigureDAO, EquipeDAO equipeDAO, EquipeCompetitionDAO equipeCompetitionDAO,
+			TypeFigureDAO typeFigureDAO, JugeDAO jugeDAO) {
 		this.competitionDAO = competitionDAO;
 		this.tourDAO = tourDAO;
 		this.epreuveDAO = epreuveDAO;
@@ -57,6 +61,7 @@ public class NotationForm {
 		this.equipeDAO = equipeDAO;
 		this.equipeCompetitionDAO = equipeCompetitionDAO;
 		this.typeFigureDAO = typeFigureDAO;
+		this.jugeDAO = jugeDAO;
 	}
 	
 	/**
@@ -158,6 +163,16 @@ public class NotationForm {
 		return list;
 	}
 	
+	public JugeBean getJugeById(String idUtilisateur) {
+		JugeBean juge = null;
+		try {
+			juge = jugeDAO.getJugeById(idUtilisateur);
+		} catch(Exception e) {
+			erreurs.put("getJugeById", e.getMessage());
+		}
+		return juge;
+	}
+	
 	public ArrayList<TypeFigureBean> getAllTypeFigure() {
 		ArrayList<TypeFigureBean> list = new ArrayList<>();
 		try {
@@ -223,18 +238,32 @@ public class NotationForm {
 				// On récupère la liste des nageuses
 	    		// On récupère les différentes figures possible
 	    		Map<String, Map<Integer, String>> map = new HashMap<>();
-	    		Map<Integer, String> mapNageuse = new HashMap<>();
+	    		Map<Integer, String> mapNageuseT = new HashMap<>();
+	    		Map<Integer, String> mapNageuseR = new HashMap<>();
 	    		Map<Integer, String> mapFigures = new HashMap<>();
+	    		Map<Integer, String> mapUtilisateurs = new HashMap<>();
+	    		
 	    		ArrayList<NageuseBean> listNageuse = getNageuseByIdEquipe(value);
 	    		for(NageuseBean n : listNageuse) {
-	    			mapNageuse.put(n.getId(), n.getNom() + " " + n.getPrenom());
+	    			if(n.getIsTitulaire())
+	    				mapNageuseT.put(n.getId(), n.getNom() + " " + n.getPrenom());
+	    			else
+	    				mapNageuseR.put(n.getId(), n.getNom() + " " + n.getPrenom());
 	    		}
+	    		
 	    		ArrayList<TypeFigureBean> listFigure = getAllTypeFigure();
 	    		for(TypeFigureBean typeFigure : listFigure) {
 	    			mapFigures.put(typeFigure.getId(), typeFigure.getLibelle());
 	    		}
-	    		map.put("nageuses", mapNageuse);
+	    		
+	    		JugeBean juge = getJugeById(((UtilisateurBean)session.getAttribute(ATTR_SESSION_USERBEAN)).getId());
+	    		mapUtilisateurs.put(0, juge.getTypeJuge().getLibelle());
+	    		mapUtilisateurs.put(1, ((UtilisateurBean)session.getAttribute(ATTR_SESSION_USERBEAN)).getAdmin().toString());
+	    		
+	    		map.put("nageusesT", mapNageuseT);
+	    		map.put("nageusesR", mapNageuseR);
 	    		map.put("figures", mapFigures);
+	    		map.put("infoUser", mapUtilisateurs);
 	    		
 	    		json = gson.toJson(map);
 				response.getWriter().write(json);

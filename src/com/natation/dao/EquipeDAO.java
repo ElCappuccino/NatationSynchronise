@@ -46,7 +46,7 @@ public class EquipeDAO {
 		ArrayList<NageuseBean> listNageuses = new ArrayList<>();
 		Connection co = this.daoFactory.getConnection();
 		try {
-			String sql = "select N.idNageuse, N.nomNageuse, N.prenomNageuse, N.dateNaissanceNageuse from Nageuse N "
+			String sql = "select N.idNageuse, N.nomNageuse, N.prenomNageuse, N.dateNaissanceNageuse, NE.isTitulaire from Nageuse N "
 					+ "inner join nageuseequipe NE on N.idNageuse = NE.idNageuse "
 					+ "where NE.idequipe = ?";
 			PreparedStatement requete = co.prepareStatement(sql);
@@ -59,6 +59,7 @@ public class EquipeDAO {
 						rs.getString(2),
 						rs.getString(3),
 						LocalDate.parse(rs.getString(4)));
+				nageuse.setIsTitulaire(rs.getBoolean(5));
 				listNageuses.add(nageuse);
 			}
 		}  catch(SQLException e) {

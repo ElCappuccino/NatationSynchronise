@@ -82,6 +82,8 @@
 						</select>
 					</div>
 				</div>
+				<br />
+				<br />
 				<div id="titulaire"></div>
 				<div id="remplacant"></div>
 			</form>

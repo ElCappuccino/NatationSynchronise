@@ -105,14 +105,38 @@ function readDataEquipe(data) {
 }
 
 function readDataNageuse(data) {
-	
-	for(var key in data["nageuses"]) {
-		console.log(data["nageuses"][key]);
+	var juge = data["infoUser"]["0"];
+	var htmlTitulaire = '<h3>Titulaire</h3><table ><tr><th></th><th>Nageuse</th><th>Figure</th><th>Note</th>'; // class="table table-striped"
+	if(juge == "Element")
+		htmlTitulaire += "<th>Note</th><th>Note</th><th>Note</th>";
+	htmlTitulaire += "</tr>"
+	for(var key in data["nageusesT"]) {
+		htmlTitulaire += "<tr>";
+		
+		htmlTitulaire += '<td><input type="checkbox" value="' + key + '"></td>';
+		htmlTitulaire += "<td>" + data["nageusesT"][key] + "</td>";
+		
+		htmlTitulaire += '<table><tr>';
+		htmlTitulaire += '<td><select class="form-control" id="listeFigure">';
+		for(var key in data["figures"]) {
+			htmlTitulaire += '<option value="' + key + '">' + data["figures"][key] + '</option>';
+		}
+		
+		htmlTitulaire += "<td></td>";
+		if(juge == "Element") {
+			htmlTitulaire += "<td></td>";
+			htmlTitulaire += "<td></td>";
+			htmlTitulaire += "<td></td>";
+		}
+		
+		htmlTitulaire += "</table></tr>";
+		
+		htmlTitulaire += "</tr>";
 	}
+	htmlTitulaire += "</table>";
+	titulaire.innerHTML = htmlTitulaire;
 	
-	for(var key in data["figures"]) {
-		console.log(data["figures"][key]);
-	}
+	
 }
 
 //---------

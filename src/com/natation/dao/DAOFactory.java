@@ -160,4 +160,18 @@ public class DAOFactory {
 	public EquipeCompetitionDAO getEquipeCompetitionDAO() {
 		return new EquipeCompetitionDAO(this);
 	}
+	
+	/**
+	 * @return DAO lié à un juge
+	 */
+	public JugeDAO getJugeDAO() {
+		return new JugeDAO(this);
+	}
+	
+	/**
+	 * @return DAO lié au type de juge
+	 */
+	public TypeJugeDAO getTypeJugeDAO() {
+		return new TypeJugeDAO(this);
+	}
 }

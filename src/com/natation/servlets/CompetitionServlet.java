@@ -16,6 +16,7 @@ import com.natation.dao.EpreuveDAO;
 import com.natation.dao.EquipeCompetitionDAO;
 import com.natation.dao.EquipeDAO;
 import com.natation.dao.ExecutionFigureDAO;
+import com.natation.dao.JugeDAO;
 import com.natation.dao.TourDAO;
 import com.natation.dao.TypeFigureDAO;
 import com.natation.metiers.NotationForm;
@@ -39,6 +40,7 @@ public class CompetitionServlet extends HttpServlet {
 	private EquipeDAO equipeDAO;
 	private EquipeCompetitionDAO equipeCompetitionDAO;
 	private TypeFigureDAO typeFigureDAO;
+	private JugeDAO jugeDAO;
 	
 	@Override
 	public void init() throws ServletException {
@@ -50,6 +52,7 @@ public class CompetitionServlet extends HttpServlet {
         this.equipeDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEquipeDAO();
         this.equipeCompetitionDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getEquipeCompetitionDAO();
         this.typeFigureDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getTypeFigureDAO();
+        this.jugeDAO = ((DAOFactory)getServletContext().getAttribute(CONF_DAOFACTORY)).getJugeDAO();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,7 +65,7 @@ public class CompetitionServlet extends HttpServlet {
             /* Redirection vers la page publique */
             response.sendRedirect( request.getContextPath() + REDIRECT );
         } else {
-        	NotationForm form = new NotationForm(competitionDAO, tourDAO, epreuveDAO, balletDAO, executionFigureDAO, equipeDAO, equipeCompetitionDAO, typeFigureDAO);
+        	NotationForm form = new NotationForm(competitionDAO, tourDAO, epreuveDAO, balletDAO, executionFigureDAO, equipeDAO, equipeCompetitionDAO, typeFigureDAO, jugeDAO);
         	
         	// On vérifie si on a une sélection dans une des listes
         	String selec = request.getParameter("selection");

@@ -7,6 +7,7 @@ public class NageuseBean {
 	private String nom; 
 	private String prenom;
 	private LocalDate dateNaissance;
+	private Boolean isTitulaire;
 	
 	/**
 	 * Constructeur complet
@@ -20,6 +21,7 @@ public class NageuseBean {
 		this.nom = unNom;
 		this.prenom = unPrenom;
 		this.dateNaissance = uneDate;
+		this.isTitulaire = false;
 	}
 	
 	/**
@@ -64,5 +66,19 @@ public class NageuseBean {
 
 	public void setDateNaissance(LocalDate dateNaissance) {
 		this.dateNaissance = dateNaissance;
+	}
+
+	/**
+	 * @return the isTitulaire
+	 */
+	public Boolean getIsTitulaire() {
+		return isTitulaire;
+	}
+
+	/**
+	 * @param isTitulaire the isTitulaire to set
+	 */
+	public void setIsTitulaire(Boolean isTitulaire) {
+		this.isTitulaire = isTitulaire;
 	}
 }
