@@ -2,6 +2,7 @@ package com.natation.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -72,11 +73,11 @@ public class CompetitionServlet extends HttpServlet {
             response.sendRedirect( request.getContextPath() + REDIRECT );
         } else {
         	// On récupère la liste des noms d'attribut, 
-//    		Enumeration<String> attributs =request.getAttributeNames();
-//        	while(attributs.hasMoreElements()) {
-//        		String s = attributs.nextElement();
-//        		System.out.println(s);
-//        	}
+    		Enumeration<String> attributs =request.getAttributeNames();
+        	while(attributs.hasMoreElements()) {
+        		String s = attributs.nextElement();
+        		System.out.println(s);
+        	}
         	this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
         }
 	}

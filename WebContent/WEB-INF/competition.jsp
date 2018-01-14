@@ -86,6 +86,7 @@
 				<br />
 				<div id="titulaire"></div>
 				<div id="remplacant"></div>
+				<br />
 				<div id="valider"></div>
 			</form>
 			
