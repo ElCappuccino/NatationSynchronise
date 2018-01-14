@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.natation.beans.UtilisateurBean;
+import com.natation.dao.CompetitionDAO;
 import com.natation.dao.DAOFactory;
+import com.natation.dao.EquipeDAO;
 import com.natation.dao.NageuseDAO;
 import com.natation.metiers.AdminForm;
 
@@ -26,10 +28,13 @@ public class AdminServlet extends HttpServlet {
 	public static final String CONF_DAOFACTORY = "daofactory";
 
 	private NageuseDAO nageuseDAO;
+	//private ClubDAO clubDAO;
+	private EquipeDAO equipeDAO;
+	private CompetitionDAO competitionDAO;
+	// TODO : quand clubDAO ok, continuer taitement listes
 	
 	@Override
 	public void init() throws ServletException {
-        /* Récupération d'une instance de DAONageuse */
         this.nageuseDAO = ( (DAOFactory) getServletContext().getAttribute( CONF_DAOFACTORY ) ).getNageuseDAO();
     }
 	
