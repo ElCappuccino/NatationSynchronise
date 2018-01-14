@@ -19,7 +19,7 @@
 			<c:if test="${not empty erreurs['getTourByIdCompetition']}">
 				<div class="alert alert-danger">${ erreurs['getTourByIdCompetition'] }</div>
 			</c:if>
-			<form>
+			<form id="form_Compet" action="/NatationSynchronise/competition" method="post">
 				<div class="form-group row">
 					<div class="col-2">
 						<label for="listeCompetitions" class="col-form-label">Compétitions
@@ -86,6 +86,7 @@
 				<br />
 				<div id="titulaire"></div>
 				<div id="remplacant"></div>
+				<div id="valider"></div>
 			</form>
 			
 		</div>

@@ -2,6 +2,8 @@ package com.natation.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -80,6 +82,27 @@ public class CompetitionServlet extends HttpServlet {
         	
         	request.setAttribute(RESP_ERRORS, form.getErreurs());
             /* Affichage de la page restreinte */
+        	this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
+        }
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		/*
+         * Si l'objet utilisateur n'existe pas dans la session en cours, alors
+         * l'utilisateur n'est pas connecté.
+         */
+        if ( session.getAttribute( ATTR_SESSION_USERBEAN ) == null ) {
+            /* Redirection vers la page publique */
+            response.sendRedirect( request.getContextPath() + REDIRECT );
+        } else {
+        	// On récupère la liste des noms d'attribut, 
+//    		Enumeration<String> attributs =request.getAttributeNames();
+//        	while(attributs.hasMoreElements()) {
+//        		String s = attributs.nextElement();
+//        		System.out.println(s);
+//        	}
         	this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
         }
 	}

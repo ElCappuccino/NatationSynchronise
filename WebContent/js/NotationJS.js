@@ -6,6 +6,7 @@ var ballets = document.querySelector("#listeBallets");
 var equipes = document.querySelector("#listeEquipes");
 var titulaire = document.querySelector("#titulaire");
 var remplacant = document.querySelector("#remplacant");
+var valider = document.querySelector("#valider");
 
 competitions.addEventListener('change', competitionChange);
 tours.addEventListener('change', tourChange);
@@ -106,30 +107,27 @@ function readDataEquipe(data) {
 
 function readDataNageuse(data) {
 	var juge = data["infoUser"]["0"];
-	var htmlTitulaire = '<h3>Titulaire</h3><table ><tr><th></th><th>Nageuse</th><th>Figure</th><th>Note</th>'; // class="table table-striped"
+	var htmlTitulaire = '<h3>Titulaire</h3><table class="table table-striped"><tr><th></th><th>Nageuse</th><th>Figure</th><th>Note</th>';
 	if(juge == "Element")
 		htmlTitulaire += "<th>Note</th><th>Note</th><th>Note</th>";
 	htmlTitulaire += "</tr>"
-	for(var key in data["nageusesT"]) {
+	for(var keyNT in data["nageusesT"]) {
 		htmlTitulaire += "<tr>";
 		
-		htmlTitulaire += '<td><input type="checkbox" value="' + key + '"></td>';
-		htmlTitulaire += "<td>" + data["nageusesT"][key] + "</td>";
+		htmlTitulaire += '<td><input type="checkbox" name="' + keyNT + '"></td>';
+		htmlTitulaire += "<td>" + data["nageusesT"][keyNT] + "</td>";
 		
-		htmlTitulaire += '<table><tr>';
-		htmlTitulaire += '<td><select class="form-control" id="listeFigure">';
-		for(var key in data["figures"]) {
-			htmlTitulaire += '<option value="' + key + '">' + data["figures"][key] + '</option>';
+		htmlTitulaire += '<td><select class="form-control" id="listeFigure_' + keyNT + '">';
+		for(var keyF in data["figures"]) {
+			htmlTitulaire += '<option value="' + keyF + '">' + data["figures"][keyF] + '</option>';
 		}
 		
-		htmlTitulaire += "<td></td>";
+		htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="10"></td>';
 		if(juge == "Element") {
-			htmlTitulaire += "<td></td>";
-			htmlTitulaire += "<td></td>";
-			htmlTitulaire += "<td></td>";
+			htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="10"></td>';
+			htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="10"></td>';
+			htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="10"></td>';
 		}
-		
-		htmlTitulaire += "</table></tr>";
 		
 		htmlTitulaire += "</tr>";
 	}
@@ -137,6 +135,34 @@ function readDataNageuse(data) {
 	titulaire.innerHTML = htmlTitulaire;
 	
 	
+	var htmlRemplacant = '<h3>Remplaçante</h3><table class="table table-striped"><tr><th></th><th>Nageuse</th><th>Figure</th><th>Note</th>';
+	if(juge == "Element")
+		htmlRemplacant += "<th>Note</th><th>Note</th><th>Note</th>";
+	htmlRemplacant += "</tr>"
+	for(var keyNR in data["nageusesR"]) {
+		htmlRemplacant += "<tr>";
+		
+		htmlRemplacant += '<td><input type="checkbox" value="' + keyNR + '"></td>';
+		htmlRemplacant += "<td>" + data["nageusesR"][keyNR] + "</td>";
+		
+		htmlRemplacant += '<td><select class="form-control" id="listeFigure_' + keyNR + '">';
+		for(var keyF in data["figures"]) {
+			htmlRemplacant += '<option value="' + keyF + '">' + data["figures"][keyF] + '</option>';
+		}
+		
+		htmlRemplacant += '<td><input type="number" class="form-control" name="note1_' + keyNR + '" min="0" max="10"></td>';
+		if(juge == "Element") {
+			htmlRemplacant += '<td><input type="number" class="form-control" name="note1_' + keyNR + '" min="0" max="10"></td>';
+			htmlRemplacant += '<td><input type="number" class="form-control" name="note2_' + keyNR + '" min="0" max="10"></td>';
+			htmlRemplacant += '<td><input type="number" class="form-control" name="note3_' + keyNR + '" min="0" max="10"></td>';
+		}
+		
+		htmlRemplacant += "</tr>";
+	}
+	htmlRemplacant += "</table>";
+	remplacant.innerHTML = htmlRemplacant;
+	
+	valider.innerHTML = '<input type="submit" class="btn btn-success"/>';
 }
 
 //---------
@@ -149,6 +175,7 @@ function competitionChange() {
 	clearEpreuves();
 	clearBallets();
 	clearEquipes();
+	clearNageuseArray();
     
     // On envoit la requete
     var value =  escape(competitions.options[competitions.selectedIndex].value);
@@ -163,6 +190,7 @@ function tourChange() {
 	clearEpreuves();
 	clearBallets();
 	clearEquipes();
+	clearNageuseArray();
     
     // On envoit la requete
     var value =  escape(tours.options[tours.selectedIndex].value);
@@ -176,6 +204,7 @@ function epreuveChange() {
 	// Clear options
 	clearBallets();
 	clearEquipes();
+	clearNageuseArray();
 	
 	// On envoit la requete
 	var value =  escape(epreuves.options[epreuves.selectedIndex].value);
@@ -187,6 +216,8 @@ function epreuveChange() {
 
 function balletChange() {
 	clearEquipes();
+	clearNageuseArray();
+	
 	// On envoit la requete
 	var value =  escape(ballets.options[ballets.selectedIndex].value);
     if(value == "0")
@@ -197,7 +228,7 @@ function balletChange() {
 }
 
 function equipeChange() {
-	// TODO Nettoyez les divs qui contiennent les tableaux de nageuses
+	clearNageuseArray();
 	
 	// On envoit la requete
 	var value =  escape(equipes.options[equipes.selectedIndex].value);
@@ -242,6 +273,17 @@ function clearEquipes() {
     }
 }
 
+function clearNageuseArray() {
+	titulaire.innerHTML = "";
+	remplacant.innerHTML = "";
+}
+
 //---------
+
+$('#form_Compet').submit(function(ev) {
+    //ev.preventDefault(); // to stop the form from submitting
+    /* Validations go here */
+    this.submit(); // If all the validations succeeded
+});
 
 
