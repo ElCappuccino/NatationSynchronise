@@ -72,12 +72,12 @@ public class CompetitionDAO {
 
 		try {
 			String sql = "select * from competition c " 
-			+ "where c.idcompetition not in ( "
-				+ "select ec.idcompetition " 
-				+ "from equipecompetition ec " 
-				+ "where ec.idequipe = ? )";
+			+ " where c.idcompetition not in ( "
+				+ " select ec.idcompetition " 
+				+ " from equipecompetition ec " 
+				+ " where ec.idequipe = ? )";
 			PreparedStatement requete = co.prepareStatement(sql);
-			requete.setString(1, idEquipe);
+			requete.setInt(1, Integer.parseInt(idEquipe));
 
 			ResultSet rs = requete.executeQuery();
 			while (rs.next()) {

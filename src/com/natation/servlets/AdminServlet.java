@@ -78,6 +78,7 @@ public class AdminServlet extends HttpServlet {
 		} else {
 			/* Affichage de la page d'admin seulement si l'utilisateur est ADMIN */
 			if (u.getAdmin()) {
+				af.inscrireEquipeCompetition(req);
 				af.uploadCsv(req);
 				req.setAttribute("messages", af.getMessages());
 				this.getServletContext().getRequestDispatcher(VUE).forward(req, resp);

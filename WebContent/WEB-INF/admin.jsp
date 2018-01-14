@@ -12,19 +12,34 @@
 		<div class="justify-content-center blocFondBlanc">
 			<h1>Panneau d'administration</h1>
 			<div class="row margin-bottom-30">
+				<%-- 
+				Affichage des messages d'erreur AJAX
+		 		--%>
+				<div class="col-sm-12">
+					<c:if test="${not empty messages['errAJAX']}">
+						<div class="alert alert-danger">${ messages['errAJAX'] }</div>
+					</c:if>
+				</div>
+				<%-- 
+				Affichage des messages de succès CSV
+		 		--%>
+				<div class="col-sm-12">
+					<c:if test="${not empty messages['successAJAX']}">
+						<div class="alert alert-success">${ messages['successAJAX'] }</div>
+					</c:if>
+				</div>
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-block">
 							<h3 class="card-title">Inscrire une équipe à une compétition</h3>
 							<p class="card-text"></p>
-							<form>
+							<form action="admin" method="post">
 								<div class="form-group row">
 									<div class="col-2">
-										<label for="listeClubs" class="col-form-label">Clubs
-										</label>
+										<label for="listeClubs" class="col-form-label">Clubs </label>
 									</div>
 									<div class="col-10">
-										<select class="form-control" id="listeClubs">
+										<select class="form-control" id="listeClubs" name="listeClubs">
 											<option value="0">Choisir le club</option>
 											<c:forEach items="${listeClubs}" var="club">
 												<option value="${club.id}">${club.nom}</option>
@@ -38,7 +53,7 @@
 										</label>
 									</div>
 									<div class="col-10">
-										<select class="form-control" id="listeEquipes">
+										<select class="form-control" id="listeEquipes" name="listeEquipes">
 											<option value="0">Choisir l'équipe</option>
 											<c:forEach items="${listeEquipes}" var="equipe">
 												<option value="${equipe.id}">${equipe.libelle}</option>
@@ -52,17 +67,17 @@
 										</label>
 									</div>
 									<div class="col-10">
-										<select class="form-control" id="listeCompetitions">
+										<select class="form-control" id="listeCompetitions" name="listeCompetitions">
 											<option value="0">Choisir la compétition</option>
 											<c:forEach items="${listeCompetitions}" var="competition">
-												<option value="${competition.id}">${competition.libelle} - du ${competition.dateDebut} au ${competition.dateFin}</option>
+												<option value="${competition.id}">${competition.libelle}</option>
 											</c:forEach>
 										</select>
 									</div>
 								</div>
-
-								<div id="titulaire"></div>
-								<div id="remplacant"></div>
+								<input type="submit" class="btn btn-success"
+									value="Inscrire l'équipe" name="registerEquipeCompetition"
+									id="registerEquipeCompetition">
 							</form>
 						</div>
 					</div>
@@ -71,7 +86,7 @@
 			<h1>Données de l'application</h1>
 			<div class="row">
 				<%-- 
-				Affichage des messages d'erreur
+				Affichage des messages d'erreur CSV
 		 		--%>
 				<div class="col-sm-12">
 					<c:if test="${not empty messages['errImport']}">
@@ -79,7 +94,7 @@
 					</c:if>
 				</div>
 				<%-- 
-				Affichage des messages de succès
+				Affichage des messages de succès CSV
 		 		--%>
 				<div class="col-sm-12">
 					<c:if test="${not empty messages['succesImport']}">

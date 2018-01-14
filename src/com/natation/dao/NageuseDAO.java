@@ -19,6 +19,7 @@ public class NageuseDAO {
 
 	/**
 	 * Recupere une nageuse selon son ID
+	 * 
 	 * @param idNageuse
 	 * @return la nageuse, null si non trouvée
 	 * @throws Exception
@@ -47,28 +48,31 @@ public class NageuseDAO {
 		}
 		return nageuse;
 	}
-	
+
+	/**
+	 * Recupere les nageuse d'un equipe dont l'id est specifie en parametre
+	 * 
+	 * @param idEquipe
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<NageuseBean> getNageusesByIdEquipe(int idEquipe) throws SQLException {
 		ArrayList<NageuseBean> listNageuses = new ArrayList<>();
 		Connection co = this.daoFactory.getConnection();
 		try {
 			String sql = "select N.idNageuse, N.nomNageuse, N.prenomNageuse, N.dateNaissanceNageuse, NE.isTitulaire from Nageuse N "
-					+ "inner join nageuseequipe NE on N.idNageuse = NE.idNageuse "
-					+ "where NE.idequipe = ?";
+					+ "inner join nageuseequipe NE on N.idNageuse = NE.idNageuse " + "where NE.idequipe = ?";
 			PreparedStatement requete = co.prepareStatement(sql);
 			requete.setInt(1, idEquipe);
 
 			ResultSet rs = requete.executeQuery();
-			while(rs.next()) {
-				NageuseBean nageuse = new NageuseBean(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
+			while (rs.next()) {
+				NageuseBean nageuse = new NageuseBean(rs.getInt(1), rs.getString(2), rs.getString(3),
 						LocalDate.parse(rs.getString(4)));
 				nageuse.setIsTitulaire(rs.getBoolean(5));
 				listNageuses.add(nageuse);
 			}
-		}  catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException("Erreur technique. Veuillez contacter l'administrateur système.");
 		} finally {
@@ -79,13 +83,14 @@ public class NageuseDAO {
 
 	/**
 	 * Créé la nageuse spécifiée en paramètre dans la base de données
+	 * 
 	 * @param nageuse
 	 * @return id de la nageuse inserée si OK, -1 sinon.
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public int createNageuse(NageuseBean nageuse) throws SQLException {
 		int insertedId = -1;
-		
+
 		if (nageuse != null) {
 			Connection co = this.daoFactory.getConnection();
 			try {
@@ -94,7 +99,7 @@ public class NageuseDAO {
 				PreparedStatement requete = co.prepareStatement(sql);
 				requete.setString(1, nageuse.getNom());
 				requete.setString(2, nageuse.getPrenom());
-				requete.setDate(3, Date.valueOf(nageuse.getDateNaissance()) );
+				requete.setDate(3, Date.valueOf(nageuse.getDateNaissance()));
 				ResultSet rs = requete.executeQuery();
 
 				if (rs.next()) {
@@ -107,7 +112,6 @@ public class NageuseDAO {
 				co.close();
 			}
 		}
-		
 		return insertedId;
 	}
 }

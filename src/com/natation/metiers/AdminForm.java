@@ -46,14 +46,34 @@ public final class AdminForm {
 	public Map<String, String> getMessages() {
 		return messages;
 	}
-	
+
+	/**
+	 * @param key
+	 *            identifiant du message
+	 * @param value
+	 *            contenu du message
+	 */
 	public void addMessage(String key, String value) {
 		this.messages.put(key, value);
 	}
 
-	// -------
-	// --- CSV
-	// -------
+	/**
+	 * Inscrit l'equipe a une competition si les listes on été renseignées
+	 * @param req
+	 */
+	public void inscrireEquipeCompetition(HttpServletRequest req) {
+		try {
+			if (req.getParameter("listeClubs") != null && req.getParameter("listeEquipes") != null
+					&& req.getParameter("listeCompetitions") != null) {
+				daoFactory.getEquipeCompetitionDAO().createEquipeCompetitionLink(
+						Integer.parseInt(req.getParameter("listeCompetitions")),
+						Integer.parseInt(req.getParameter("listeEquipes")));
+				messages.put("successAJAX", "Inscription de l'équipe enregistrée.");
+			}
+		} catch (Exception e) {
+			messages.put("errAJAX", e.getMessage());
+		}
+	}
 
 	/**
 	 * Parse le contenu d'un CSV et l'ajoute en BdD
@@ -66,6 +86,7 @@ public final class AdminForm {
 		boolean csvReceived = false;
 
 		try {
+			// TODO : check if set or not, cause always non-null when a form is sent!
 			if (req.getPart("csvNageuses") != null) {
 				csvReceived = true;
 				List<NageuseBean> nouvellesNageuses = parseNageuses(req);
@@ -86,6 +107,10 @@ public final class AdminForm {
 		return csvReceived;
 	}
 
+	// -------
+	// --- Helpers CSV
+	// -------
+
 	/**
 	 * Récupère le CSV des nageuse à importer et créé une instance de nageuse par
 	 * ligne du CSV
@@ -96,7 +121,7 @@ public final class AdminForm {
 	 */
 	private List<NageuseBean> parseNageuses(HttpServletRequest req) throws Exception {
 		List<NageuseBean> nouvellesNageuses = new ArrayList<NageuseBean>();
-
+		// TODO : check if lists have a value, because  succes messages apears when everything is not set (check JS because it can be the defaults values of the inputs!)
 		try {
 			// Récupération csv nageuses
 			Part filePart;
@@ -122,15 +147,16 @@ public final class AdminForm {
 	}
 
 	// -------
-	// --- Traitements AJAX
+	// --- Helpers Traitements AJAX
 	// -------
 
 	public void handleAJAXCall(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
-		
+
 	}
-	
+
 	/**
 	 * Créé un liste contenant les clubs et l'ajoute dans l'objet requete
+	 * 
 	 * @param req
 	 * @throws SQLException
 	 */
@@ -138,7 +164,7 @@ public final class AdminForm {
 		ArrayList<ClubBean> clubs = daoFactory.getClubDAO().getAllClubs();
 		req.setAttribute("listeClubs", clubs);
 	}
-	
+
 	public void sendFields(HttpServletRequest request, HttpServletResponse response, HttpSession session,
 			String selectEquipeCompet) throws IOException, NumberFormatException, SQLException {
 		String value = request.getParameter("valeur");
@@ -171,7 +197,7 @@ public final class AdminForm {
 			json = gson.toJson(mapCompets);
 			response.getWriter().write(json);
 			return;
-			
+
 		}
 	}
 }

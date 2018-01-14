@@ -130,7 +130,7 @@ function clubChange() {
 	if (value == "0")
 		return;
 	var url = "admin?selectEquipeCompet=club&valeur=" + value;
-	request(readCompetitions, url);
+	request(readEquipes, url);
 }
 
 /**
@@ -146,6 +146,6 @@ function equipeChange() {
 	if (value == "0")
 		return;
 	var url = "admin?selectEquipeCompet=equipe&valeur=" + value;
-	request(readEquipes, url);
+	request(readCompetitions, url);
 }
 
