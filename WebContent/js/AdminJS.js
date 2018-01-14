@@ -4,7 +4,7 @@ var equipes = document.querySelector("#listeEquipes");
 var competitions = document.querySelector('#listeCompetitions');
 
 // --- Binding des listeners aux listes
-clubs.addEventListener('change', clubsChange);
+clubs.addEventListener('change', clubChange);
 equipes.addEventListener('change', equipeChange);
 //competitions.addEventListener('change', competitionChange);
 
@@ -129,7 +129,7 @@ function clubChange() {
 	var value = escape(clubs.options[clubs.selectedIndex].value);
 	if (value == "0")
 		return;
-	var url = "admin?selection=club&valeur=" + value;
+	var url = "admin?selectEquipeCompet=club&valeur=" + value;
 	request(readCompetitions, url);
 }
 
@@ -145,7 +145,7 @@ function equipeChange() {
 	var value = escape(equipes.options[equipes.selectedIndex].value);
 	if (value == "0")
 		return;
-	var url = "admin?selection=equipe&valeur=" + value;
+	var url = "admin?selectEquipeCompet=equipe&valeur=" + value;
 	request(readEquipes, url);
 }
 

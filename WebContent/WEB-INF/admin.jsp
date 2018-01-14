@@ -27,7 +27,7 @@
 										<select class="form-control" id="listeClubs">
 											<option value="0">Choisir le club</option>
 											<c:forEach items="${listeClubs}" var="club">
-												<option value="${club.id}">${club.libelle}</option>
+												<option value="${club.id}">${club.nom}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -117,6 +117,8 @@
 		</div>
 	</div>
 
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/AdminJS.js"></script>
 	<jsp:include page="parts/footer.jsp" />
 </body>
 </html>
