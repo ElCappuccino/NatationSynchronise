@@ -13,6 +13,9 @@ tours.addEventListener('change', tourChange);
 epreuves.addEventListener('change', epreuveChange);
 ballets.addEventListener('change', balletChange);
 equipes.addEventListener('change', equipeChange);
+valider.addEventListener('click', envoyerDonnees);
+
+$("#valider").hide();
 
 // ---- AJAX
 
@@ -122,11 +125,11 @@ function readDataNageuse(data) {
 			htmlTitulaire += '<option value="' + keyF + '">' + data["figures"][keyF] + '</option>';
 		}
 		
-		htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="10"></td>';
+		htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="100"></td>';
 		if(juge == "Element") {
-			htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="10"></td>';
-			htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="10"></td>';
-			htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="10"></td>';
+			htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="100"></td>';
+			htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="100"></td>';
+			htmlTitulaire += '<td><input type="number" class="form-control" name="note[]" min="0" max="100"></td>';
 		}
 		
 		htmlTitulaire += "</tr>";
@@ -162,7 +165,7 @@ function readDataNageuse(data) {
 	htmlRemplacant += "</table>";
 	remplacant.innerHTML = htmlRemplacant;
 	
-	valider.innerHTML = '<input type="submit" class="btn btn-success"/>';
+	$("#valider").show();
 }
 
 //---------
@@ -279,6 +282,11 @@ function clearNageuseArray() {
 }
 
 //---------
+
+function envoyerDonnees() {
+	var note = document.forms[0].elements["note[]"];
+	console.log(note);
+}
 
 $('#form_Compet').submit(function(ev) {
     //ev.preventDefault(); // to stop the form from submitting

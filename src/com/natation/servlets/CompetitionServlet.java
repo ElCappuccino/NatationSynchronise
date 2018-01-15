@@ -73,11 +73,9 @@ public class CompetitionServlet extends HttpServlet {
             response.sendRedirect( request.getContextPath() + REDIRECT );
         } else {
         	// On récupère la liste des noms d'attribut, 
-    		Enumeration<String> attributs =request.getAttributeNames();
-        	while(attributs.hasMoreElements()) {
-        		String s = attributs.nextElement();
-        		System.out.println(s);
-        	}
+        	String[] s = request.getParameterValues("note[]");
+        	System.out.println();
+        	
         	this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
         }
 	}
