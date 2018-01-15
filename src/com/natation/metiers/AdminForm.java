@@ -86,8 +86,13 @@ public final class AdminForm {
 		boolean csvReceived = false;
 
 		try {
-			// TODO : check if set or not, cause always non-null when a form is sent!
-			if (req.getPart("csvNageuses") != null) {
+			boolean csvNageuseSet = false;
+			try {
+				req.getPart("csvNageuses");
+				csvNageuseSet = true;
+			} catch(Exception e) { }
+			
+			if (csvNageuseSet) {
 				csvReceived = true;
 				List<NageuseBean> nouvellesNageuses = parseNageuses(req);
 				for (NageuseBean n : nouvellesNageuses) {

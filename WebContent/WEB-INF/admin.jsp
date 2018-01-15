@@ -39,7 +39,7 @@
 										<label for="listeClubs" class="col-form-label">Clubs </label>
 									</div>
 									<div class="col-10">
-										<select class="form-control" id="listeClubs" name="listeClubs">
+										<select class="form-control" id="listeClubs" name="listeClubs" required>
 											<option value="0">Choisir le club</option>
 											<c:forEach items="${listeClubs}" var="club">
 												<option value="${club.id}">${club.nom}</option>
@@ -53,11 +53,8 @@
 										</label>
 									</div>
 									<div class="col-10">
-										<select class="form-control" id="listeEquipes" name="listeEquipes">
-											<option value="0">Choisir l'équipe</option>
-											<c:forEach items="${listeEquipes}" var="equipe">
-												<option value="${equipe.id}">${equipe.libelle}</option>
-											</c:forEach>
+										<select class="form-control" id="listeEquipes" name="listeEquipes" required>
+											<!-- option ajoute en JS -->
 										</select>
 									</div>
 								</div>
@@ -67,11 +64,8 @@
 										</label>
 									</div>
 									<div class="col-10">
-										<select class="form-control" id="listeCompetitions" name="listeCompetitions">
-											<option value="0">Choisir la compétition</option>
-											<c:forEach items="${listeCompetitions}" var="competition">
-												<option value="${competition.id}">${competition.libelle}</option>
-											</c:forEach>
+										<select class="form-control" id="listeCompetitions" name="listeCompetitions" required>
+											<!-- option ajoute en JS -->
 										</select>
 									</div>
 								</div>
@@ -111,7 +105,7 @@
 								<%-- Hack pour pouvoir appliquer le style bootstrap aux boutons type "file" --%>
 								<label class="btn btn-primary"
 									style="margin-bottom: 0px; !important"> Parcourir... <input
-									type="file" name="csvNageuses" id="csvNageuses" hidden>
+									type="file" name="csvNageuses" id="csvNageuses" accept=".csv" hidden>
 								</label> <input type="submit" class="btn btn-success" value="Importer!"
 									name="subCsvNageuses" id="subCsvNageuses">
 							</form>
