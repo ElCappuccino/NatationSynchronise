@@ -107,6 +107,7 @@ public final class AdminForm {
 			}
 		} catch (Exception e) {
 			messages.put("errImport", e.getMessage());
+			e.printStackTrace();
 		}
 
 		return csvReceived;
