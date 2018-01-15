@@ -1,0 +1,1 @@
+("192.168.43.60:5432/BaseNatation", "postgres", "password");
