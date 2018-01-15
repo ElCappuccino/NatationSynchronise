@@ -87,7 +87,7 @@
 				<div id="titulaire"></div>
 				<div id="remplacant"></div>
 				<br />
-				<div id="valider"></div>
+				<button type="button" id="valider" class="btn btn-success">Envoyer</button>
 			</form>
 			
 		</div>
