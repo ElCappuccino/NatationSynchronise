@@ -10,7 +10,7 @@
 		<jsp:include page="parts/menu.jsp" />
 		<div class="container">
 			<div class="justify-content-center blocFondBlanc">
-				Ceci est le corps d'une page
+				<h2>Bienvenue ${ nomPrenomUser }</h2>
 			</div>
 		</div>
 		
